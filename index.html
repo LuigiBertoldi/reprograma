@@ -5,35 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reprograma 30 — Método Anti-Vício</title>
   <meta name="description" content="Reprograma 30: método anti-vício com trilhas para apostas, álcool, cigarro, pornografia e drogas. Modo crise, check-in e progresso visível." />
-  <meta name="theme-color" content="#0a0f1d" />
+  <meta name="theme-color" content="#0B1020" />
 
   <style>
     :root{
-      --bg:#0a0f1d;
-      --bg2:#0f162c;
-      --panel:rgba(255,255,255,.04);
-      --panel2:rgba(255,255,255,.03);
-      --line:rgba(255,255,255,.09);
-      --line2:rgba(255,255,255,.16);
-      --text:#eef4ff;
-      --muted:#a9b6d3;
+      --bg:#0b1020;
+      --bg-soft:#121932;
+      --card:#121a31;
+      --card-2:#0f162b;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.14);
+      --text:#eef3ff;
+      --muted:#aab5d1;
 
-      --violet:#8a5bff;
-      --cyan:#33d6ff;
-      --pink:#ff5cd6;
+      --primary:#7c5cff;
+      --primary-2:#2fd0ff;
+      --accent:#ff62c8;
 
-      --good:#38d487;
-      --warn:#ffd06b;
-      --bad:#ff6b86;
+      --good:#35d081;
+      --warn:#ffcd69;
+      --bad:#ff6f8d;
 
-      --shadow:0 24px 70px rgba(0,0,0,.45);
-      --shadow-soft:0 12px 30px rgba(0,0,0,.22);
-
-      --r-sm:14px;
-      --r:20px;
-      --r-lg:28px;
-      --max:1160px;
-      --nav-h:74px;
+      --radius:16px;
+      --radius-lg:22px;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --max:1100px;
     }
 
     *{box-sizing:border-box}
@@ -43,445 +39,377 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(900px 650px at 8% -10%, rgba(138,91,255,.18), transparent 60%),
-        radial-gradient(800px 600px at 100% 0%, rgba(51,214,255,.14), transparent 60%),
-        linear-gradient(180deg, #090e1b, #0a1020 55%, #0d1528);
-      min-height:100vh;
-      overflow-x:hidden;
+        radial-gradient(700px 500px at 10% -10%, rgba(124,92,255,.16), transparent 60%),
+        radial-gradient(700px 500px at 100% 0%, rgba(47,208,255,.10), transparent 60%),
+        var(--bg);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
 
     a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
     button,input,select{font:inherit}
-    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
     .hidden{display:none!important}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 14px}
     .muted{color:var(--muted)}
-    .small{font-size:12px;line-height:1.6;color:var(--muted)}
-    .danger{color:#ffd6de}
+    .small{font-size:12px;line-height:1.55;color:var(--muted)}
 
-    /* NAV */
+    /* NAV (mobile-first) */
     .nav{
-      position:sticky; top:0; z-index:60;
-      height:var(--nav-h);
+      position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
-      background:rgba(10,15,29,.75);
+      background:rgba(11,16,32,.78);
       border-bottom:1px solid var(--line);
     }
     .nav-inner{
-      height:100%;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      height:64px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
-
     .brand{
-      display:flex; align-items:center; gap:12px;
+      display:flex; align-items:center; gap:10px;
+      min-width:0;
       cursor:pointer;
-      min-width:220px;
     }
-    .brand-mark{
-      width:42px; height:42px; border-radius:14px;
+    .logo{
+      width:36px; height:36px; border-radius:12px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.02);
-      box-shadow:0 12px 30px rgba(138,91,255,.14);
+      background:linear-gradient(135deg, rgba(124,92,255,.2), rgba(47,208,255,.14));
       display:grid; place-items:center;
-      overflow:hidden;
       flex:0 0 auto;
     }
+    .brand-text{min-width:0}
     .brand-title{
-      font-weight:900; font-size:15px; line-height:1;
-      letter-spacing:.1px;
+      font-weight:900; font-size:14px; line-height:1;
+      white-space:nowrap;
     }
-    .brand-title .n{
-      background:linear-gradient(135deg,var(--violet),var(--cyan));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
+    .brand-title span{
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
     }
     .brand-sub{
-      margin-top:4px;
+      margin-top:3px;
       font-size:11px; color:var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width:180px;
     }
 
-    .nav-links{
-      display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-    }
-    .nav-links a{
-      font-size:13px;
-      color:var(--muted);
-      border:1px solid transparent;
-      padding:8px 10px;
-      border-radius:999px;
-      transition:.16s ease;
-    }
-    .nav-links a:hover{
-      color:var(--text);
-      background:rgba(255,255,255,.03);
-      border-color:var(--line);
-    }
-    .nav-actions{
-      display:flex; align-items:center; gap:10px;
-      flex:0 0 auto;
-    }
+    .nav-actions{display:flex; align-items:center; gap:8px; flex:0 0 auto;}
+    .desktop-links{display:none}
 
-    /* BUTTONS */
+    /* Buttons */
     .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding:11px 14px;
-      border-radius:999px;
       border:1px solid transparent;
+      border-radius:999px;
+      padding:11px 14px;
       font-weight:800;
       font-size:14px;
+      color:var(--text);
+      background:rgba(255,255,255,.03);
       cursor:pointer;
       transition:.15s ease;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
       white-space:nowrap;
-      user-select:none;
     }
     .btn:hover{transform:translateY(-1px)}
     .btn:active{transform:translateY(0)}
-    .btn-sm{padding:9px 12px;font-size:13px}
+    .btn-sm{padding:8px 11px;font-size:12px}
     .btn-block{width:100%}
     .btn-primary{
-      color:#06111d;
-      background:linear-gradient(135deg,var(--violet),var(--cyan));
-      box-shadow:0 12px 30px rgba(51,214,255,.14),0 12px 30px rgba(138,91,255,.18);
+      color:#071222;
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      box-shadow:0 10px 24px rgba(124,92,255,.18);
     }
     .btn-ghost{
-      color:var(--text);
-      background:rgba(255,255,255,.02);
       border-color:var(--line);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
     }
     .btn-soft{
-      color:var(--text);
+      border-color:var(--line);
       background:rgba(255,255,255,.05);
-      border-color:rgba(255,255,255,.11);
     }
 
-    /* SECTION */
-    section{padding:34px 0}
-    .section-head{
-      display:flex; justify-content:space-between; align-items:flex-end; gap:16px;
-      margin-bottom:14px;
-    }
+    /* Sections */
+    section{padding:26px 0}
+    .section-head{margin-bottom:12px}
     .section-head h2{
       margin:0;
-      font-size:24px;
-      letter-spacing:-.35px;
+      font-size:20px;
+      line-height:1.15;
+      letter-spacing:-.3px;
     }
     .section-head p{
-      margin:0;
+      margin:8px 0 0;
       color:var(--muted);
       font-size:13px;
-      line-height:1.6;
-      max-width:700px;
-      text-align:right;
+      line-height:1.55;
     }
 
-    /* HERO */
-    header{padding:34px 0 8px}
+    /* Hero */
+    header{padding:18px 0 8px}
     .hero{
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      padding:16px;
       position:relative;
       overflow:hidden;
-      border-radius:var(--r-lg);
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.022));
-      box-shadow:var(--shadow);
-      padding:26px;
-      isolation:isolate;
     }
-    .hero::before{
+    .hero:before{
       content:"";
       position:absolute;
-      width:390px; height:390px; border-radius:50%;
-      right:-140px; top:-160px;
-      background:radial-gradient(circle, rgba(51,214,255,.22), transparent 62%);
-      filter:blur(10px);
-      z-index:-1;
+      width:240px;height:240px;border-radius:50%;
+      right:-90px; top:-100px;
+      background:radial-gradient(circle, rgba(47,208,255,.18), transparent 65%);
+      pointer-events:none;
     }
-    .hero::after{
+    .hero:after{
       content:"";
       position:absolute;
-      width:460px; height:460px; border-radius:50%;
-      left:-180px; bottom:-250px;
-      background:radial-gradient(circle, rgba(138,91,255,.20), rgba(255,92,214,.08), transparent 64%);
-      filter:blur(12px);
-      z-index:-1;
+      width:260px;height:260px;border-radius:50%;
+      left:-120px; bottom:-130px;
+      background:radial-gradient(circle, rgba(124,92,255,.15), transparent 65%);
+      pointer-events:none;
     }
 
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.08fr .92fr;
-      gap:20px;
-      align-items:start;
-    }
-    .hero-kicker{
-      display:flex; flex-wrap:wrap; gap:8px;
-      margin-bottom:12px;
+    .pills{
+      display:flex; flex-wrap:wrap; gap:6px;
+      margin-bottom:10px;
     }
     .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 9px;
       border-radius:999px;
       border:1px solid var(--line);
       background:rgba(255,255,255,.02);
       color:var(--muted);
-      font-size:12px;
+      font-size:11px;
     }
     .dot{
-      width:8px; height:8px; border-radius:50%;
+      width:7px;height:7px;border-radius:50%;
       background:var(--good);
-      box-shadow:0 0 0 4px rgba(56,212,135,.12);
+      box-shadow:0 0 0 4px rgba(53,208,129,.11);
     }
 
     .hero h1{
-      margin:0 0 10px;
-      font-size:44px;
+      margin:0;
+      font-size:28px;
       line-height:1.03;
-      letter-spacing:-1px;
+      letter-spacing:-.8px;
       max-width:14ch;
     }
-    .lead{
-      margin:0;
+    .hero .lead{
+      margin:10px 0 0;
       color:var(--muted);
-      font-size:15px;
-      line-height:1.7;
-      max-width:64ch;
-    }
-    .hero-cta{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:16px;
+      font-size:14px;
+      line-height:1.6;
     }
 
-    .hero-list{
-      display:grid; gap:10px;
-      margin-top:16px;
+    .hero-actions{
+      margin-top:14px;
+      display:grid;
+      gap:8px;
     }
-    .hero-list .item{
-      display:flex; gap:10px; align-items:flex-start;
+
+    .mini-points{
+      margin-top:14px;
+      display:grid; gap:8px;
+    }
+    .mini-point{
       border:1px solid var(--line);
+      border-radius:14px;
       background:rgba(255,255,255,.02);
-      border-radius:15px;
-      padding:10px 12px;
+      padding:10px 11px;
+      display:flex; gap:9px; align-items:flex-start;
     }
     .spark{
-      width:10px; height:10px; border-radius:50%;
-      margin-top:5px; flex:0 0 auto;
-      background:linear-gradient(135deg,var(--pink),var(--violet),var(--cyan));
-      box-shadow:0 0 0 5px rgba(138,91,255,.12);
+      width:9px;height:9px;border-radius:50%;
+      flex:0 0 auto;
+      margin-top:4px;
+      background:linear-gradient(135deg,var(--accent),var(--primary),var(--primary-2));
+      box-shadow:0 0 0 5px rgba(124,92,255,.1);
     }
-    .hero-list b{font-size:13px}
-    .hero-list span{display:block;color:var(--muted);font-size:12px;line-height:1.5}
-
-    .hero-side{
-      display:grid; gap:10px;
-    }
-    .mini-card{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.02);
-      border-radius:18px;
-      padding:14px;
-      box-shadow:var(--shadow-soft);
-    }
-    .mini-card h3{
-      margin:0 0 8px;
-      font-size:14px;
-      letter-spacing:-.2px;
-    }
-    .mini-card p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
+    .mini-point b{font-size:12px}
+    .mini-point span{display:block;color:var(--muted);font-size:12px;line-height:1.45}
 
     .disclaimer{
-      margin-top:14px;
+      margin-top:12px;
       border-top:1px solid var(--line);
-      padding-top:12px;
-      font-size:12px;
-      line-height:1.6;
-      color:#ffdbe2;
+      padding-top:10px;
+      font-size:11px;
+      line-height:1.55;
+      color:#ffd7df;
     }
 
-    /* GRID / CARD */
-    .grid{display:grid; gap:12px}
-    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    /* Cards & grids */
+    .grid{display:grid; gap:10px}
+    .grid-2,.grid-3{grid-template-columns:1fr}
 
     .card{
       border:1px solid var(--line);
-      background:var(--panel2);
-      border-radius:var(--r);
-      padding:16px;
-      box-shadow:var(--shadow-soft);
+      background:linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.015));
+      border-radius:var(--radius);
+      padding:14px;
     }
     .card h3{
-      margin:0 0 8px;
-      font-size:15px;
+      margin:0 0 6px;
+      font-size:14px;
+      line-height:1.25;
       letter-spacing:-.15px;
     }
     .card p{
       margin:0;
       color:var(--muted);
       font-size:13px;
-      line-height:1.62;
+      line-height:1.55;
     }
-
     .divider{
-      height:1px; background:var(--line);
-      margin:12px 0;
+      height:1px;background:var(--line);
+      margin:10px 0;
     }
 
     .badge{
       display:inline-block;
+      padding:5px 8px;
       border-radius:999px;
-      padding:6px 9px;
-      margin:3px 6px 0 0;
-      font-size:11px;
       border:1px solid var(--line);
+      font-size:10px;
+      margin:2px 4px 0 0;
       color:var(--muted);
       background:rgba(255,255,255,.02);
     }
-    .badge.good{border-color:rgba(56,212,135,.28); color:#baf5d6; background:rgba(56,212,135,.08)}
-    .badge.warn{border-color:rgba(255,208,107,.28); color:#ffe6b0; background:rgba(255,208,107,.08)}
-    .badge.bad{border-color:rgba(255,107,134,.28); color:#ffd3dc; background:rgba(255,107,134,.08)}
+    .badge.good{border-color:rgba(53,208,129,.22); color:#b8f3d3; background:rgba(53,208,129,.08)}
+    .badge.warn{border-color:rgba(255,205,105,.22); color:#ffe6ae; background:rgba(255,205,105,.08)}
+    .badge.bad{border-color:rgba(255,111,141,.22); color:#ffd2dc; background:rgba(255,111,141,.08)}
 
-    /* CHOICE CARD */
     .choice{
-      display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
       cursor:pointer;
-      transition:.16s ease;
+      transition:.15s ease;
     }
     .choice:hover{
-      transform:translateY(-2px);
-      border-color:rgba(51,214,255,.25);
-      background:rgba(255,255,255,.045);
+      border-color:rgba(47,208,255,.18);
+      background:rgba(255,255,255,.03);
     }
-    .choice-right{
-      min-width:56px;
-      display:flex; justify-content:center; align-items:center;
+    .choice-top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
     }
 
-    /* VALUE LIST */
+    /* Feature list */
     .feature-list{
-      list-style:none;
-      padding:0; margin:0;
-      display:grid; gap:10px;
+      margin:0; padding:0; list-style:none;
+      display:grid; gap:9px;
     }
     .feature-list li{
-      display:flex; gap:10px; align-items:flex-start;
+      display:flex; gap:8px; align-items:flex-start;
       color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
+      font-size:13px; line-height:1.45;
     }
     .check{
-      width:18px; height:18px; border-radius:7px;
-      border:1px solid rgba(56,212,135,.28);
-      background:rgba(56,212,135,.10);
-      color:var(--good);
+      width:17px;height:17px;border-radius:7px;
       display:grid; place-items:center;
+      border:1px solid rgba(53,208,129,.22);
+      background:rgba(53,208,129,.08);
+      color:var(--good);
       font-weight:900;
       flex:0 0 auto;
       margin-top:1px;
     }
 
-    /* PRICING */
+    /* Pricing */
     .pricing{
       display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    .price{
-      position:relative;
-      overflow:hidden;
+      grid-template-columns:1fr;
+      gap:10px;
     }
     .price.best{
-      border-color:rgba(51,214,255,.25);
-      background:linear-gradient(180deg, rgba(51,214,255,.05), rgba(255,255,255,.03));
+      border-color:rgba(47,208,255,.18);
+      background:linear-gradient(180deg, rgba(47,208,255,.05), rgba(255,255,255,.02));
+      position:relative;
     }
     .ribbon{
       position:absolute; top:10px; right:10px;
-      padding:6px 8px;
-      border-radius:999px;
       font-size:10px; font-weight:900;
-      color:#06101c;
-      background:linear-gradient(135deg,var(--violet),var(--cyan));
+      color:#08111f;
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      border-radius:999px;
+      padding:5px 8px;
     }
     .money{
-      margin:8px 0 2px;
-      font-size:34px;
+      margin:7px 0 2px;
+      font-size:30px;
       line-height:1;
       font-weight:900;
-      letter-spacing:-.8px;
+      letter-spacing:-.7px;
     }
     .money small{
+      font-size:12px;
       color:var(--muted);
-      font-size:13px;
       font-weight:700;
     }
 
     /* FAQ */
-    .faq-list{display:grid; gap:10px}
+    .faq-list{display:grid; gap:8px}
     .faq-item{
       border:1px solid var(--line);
-      border-radius:16px;
-      background:rgba(255,255,255,.022);
+      border-radius:14px;
       overflow:hidden;
+      background:rgba(255,255,255,.02);
     }
     .faq-btn{
       width:100%;
+      border:0;
       background:transparent;
-      border:none;
       color:var(--text);
-      padding:14px 16px;
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      padding:12px;
       text-align:left;
+      display:flex; justify-content:space-between; gap:10px; align-items:center;
       cursor:pointer;
-      font-size:14px;
+      font-size:13px;
       font-weight:800;
     }
-    .faq-btn:hover{background:rgba(255,255,255,.02)}
     .faq-icon{
-      width:28px; height:28px; border-radius:10px;
+      width:24px;height:24px;border-radius:9px;
       border:1px solid var(--line);
-      color:var(--muted);
       display:grid; place-items:center;
+      color:var(--muted);
       flex:0 0 auto;
-      font-weight:900;
     }
     .faq-panel{
       display:none;
-      padding:0 16px 14px;
+      padding:0 12px 12px;
       color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
+      font-size:12px;
+      line-height:1.55;
     }
     .faq-item.open .faq-panel{display:block}
     .faq-item.open .faq-icon{color:var(--text)}
 
-    /* TRILHA */
-    .two-col{
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:12px;
-      align-items:start;
-    }
+    /* Trilha / checkin */
     .kpi{
       border:1px solid var(--line);
-      border-radius:16px;
+      border-radius:14px;
       background:rgba(255,255,255,.02);
-      padding:12px;
+      padding:10px;
       display:flex; justify-content:space-between; gap:10px;
     }
-    .kpi span{font-size:12px;color:var(--muted)}
-    .kpi b{font-size:18px;letter-spacing:-.3px}
+    .kpi span{font-size:11px;color:var(--muted)}
+    .kpi b{font-size:16px}
     .progress{
       margin-top:8px;
-      height:10px; border-radius:999px;
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.03);
       overflow:hidden;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.04);
     }
     .progress > div{
-      height:100%; width:0%;
-      background:linear-gradient(90deg,var(--violet),var(--cyan));
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--primary),var(--primary-2));
     }
 
+    .field-wrap{margin-top:10px}
     .field-label{
       display:block;
       font-size:12px;
@@ -498,83 +426,105 @@
       outline:none;
     }
     .field:focus{
-      border-color:rgba(51,214,255,.28);
-      box-shadow:0 0 0 4px rgba(51,214,255,.08);
+      border-color:rgba(47,208,255,.25);
+      box-shadow:0 0 0 4px rgba(47,208,255,.07);
     }
     select.field option{
-      background:#121b30;
-      color:#eef4ff;
+      background:#141d35;
+      color:#eef3ff;
     }
     input[type="range"]{width:100%}
-    .btn-row{display:flex; gap:8px; flex-wrap:wrap}
 
-    /* MODAL CRISE */
-    .overlay{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.58);
-      backdrop-filter:blur(8px);
-      z-index:100;
-      display:none;
+    .btn-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:10px;
     }
-    .modal{
+    .btn-row.three{grid-template-columns:1fr 1fr 1fr}
+    .btn-row .btn{padding:10px 10px;font-size:12px}
+
+    /* Bottom sticky CTA mobile */
+    .bottom-cta{
       position:fixed;
-      left:50%; top:50%;
-      transform:translate(-50%,-50%);
-      width:min(780px, calc(100% - 24px));
-      border-radius:22px;
-      border:1px solid var(--line2);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow:0 30px 100px rgba(0,0,0,.55);
-      z-index:101;
-      overflow:hidden;
+      left:0; right:0; bottom:0;
+      z-index:40;
+      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+      background:linear-gradient(180deg, rgba(11,16,32,0), rgba(11,16,32,.9) 30%, rgba(11,16,32,.95));
+      border-top:1px solid rgba(255,255,255,.03);
+      display:flex; gap:8px;
+    }
+    .bottom-cta .btn{flex:1}
+    body.with-bottom-pad{padding-bottom:84px}
+
+    /* Crisis Bottom Sheet (mobile-first) */
+    .overlay{
+      position:fixed; inset:0; z-index:100;
+      background:rgba(0,0,0,.58);
+      backdrop-filter:blur(6px);
       display:none;
     }
-    .modal-head{
-      padding:14px;
-      border-bottom:1px solid var(--line);
-      display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+    .sheet{
+      position:fixed; left:0; right:0; bottom:0;
+      z-index:101;
+      background:linear-gradient(180deg, #111833, #0d1429);
+      border-top-left-radius:20px;
+      border-top-right-radius:20px;
+      border:1px solid var(--line-2);
+      border-bottom:0;
+      box-shadow:0 -20px 60px rgba(0,0,0,.45);
+      transform:translateY(100%);
+      transition:transform .22s ease;
+      max-height:min(86vh, 700px);
+      overflow:auto;
+      padding-bottom:calc(14px + env(safe-area-inset-bottom));
     }
-    .modal-head h3{margin:0;font-size:16px}
-    .modal-head p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.55}
+    .sheet.open{transform:translateY(0)}
+    .sheet-handle{
+      width:42px;height:4px;border-radius:99px;
+      background:rgba(255,255,255,.18);
+      margin:10px auto 8px;
+    }
+    .sheet-head{
+      padding:0 14px 8px;
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+    }
+    .sheet-head h3{margin:0;font-size:15px}
+    .sheet-head p{margin:5px 0 0;color:var(--muted);font-size:12px;line-height:1.5}
     .icon-btn{
-      width:38px; height:38px;
-      border-radius:12px;
+      width:34px;height:34px;border-radius:12px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.02);
+      background:rgba(255,255,255,.03);
       color:var(--text);
       display:grid; place-items:center;
       cursor:pointer;
       flex:0 0 auto;
     }
-    .modal-body{padding:14px}
-    .modal-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
+    .sheet-body{
+      padding:0 14px 14px;
+      display:grid; gap:10px;
     }
-    .modal-card{
+    .sheet-card{
       border:1px solid var(--line);
+      border-radius:14px;
       background:rgba(255,255,255,.02);
-      border-radius:16px;
-      padding:14px;
+      padding:12px;
     }
-    .modal-card h4{margin:0 0 8px;font-size:14px}
-    .modal-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
-
-    .breath-wrap{
-      display:flex; gap:12px; align-items:center;
+    .sheet-card h4{margin:0 0 6px;font-size:13px}
+    .sheet-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+    .breath-box{
       margin-top:10px;
+      display:flex; gap:10px; align-items:center;
     }
     .breath-ball{
-      width:84px; height:84px; border-radius:24px;
+      width:64px;height:64px;border-radius:18px;
       border:1px solid var(--line);
       background:
-        radial-gradient(circle at 30% 30%, rgba(51,214,255,.22), transparent 65%),
-        radial-gradient(circle at 70% 70%, rgba(138,91,255,.18), transparent 65%),
+        radial-gradient(circle at 30% 30%, rgba(47,208,255,.18), transparent 65%),
+        radial-gradient(circle at 70% 70%, rgba(124,92,255,.15), transparent 65%),
         rgba(255,255,255,.02);
-      box-shadow:0 8px 30px rgba(51,214,255,.08);
-      transform:scale(.94);
       flex:0 0 auto;
+      transform:scale(.95);
     }
     .breathing{animation:breathe 6s ease-in-out infinite}
     @keyframes breathe{
@@ -582,93 +532,131 @@
       50%{transform:scale(1.08)}
       100%{transform:scale(.92)}
     }
-    .timer b{display:block;font-size:20px;letter-spacing:-.5px}
-    .timer span{font-size:12px;color:var(--muted)}
-    .modal-note{
-      margin-top:10px;
-      font-size:12px; line-height:1.55;
-      color:var(--muted);
+    .timer b{display:block;font-size:18px}
+    .timer span{font-size:11px;color:var(--muted)}
+    .sheet-grid-actions{
+      display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;
     }
+    .sheet-grid-actions .btn{padding:10px 8px; font-size:12px}
 
-    /* TOAST */
+    /* Toast */
     .toast{
       position:fixed;
-      left:50%; bottom:16px;
+      left:50%; bottom:92px;
       transform:translateX(-50%);
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.62);
-      backdrop-filter:blur(8px);
-      color:var(--text);
-      font-size:13px;
       z-index:120;
+      background:rgba(0,0,0,.65);
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:999px;
+      padding:9px 12px;
+      font-size:12px;
       display:none;
+      max-width:calc(100% - 22px);
+      text-align:center;
     }
 
-    /* FOOTER */
     footer{
-      margin-top:24px;
+      padding:22px 0 26px;
       border-top:1px solid var(--line);
-      padding:22px 0 38px;
+      margin-top:10px;
     }
 
-    /* RESPONSIVO */
-    @media (max-width: 980px){
-      .nav-links{display:none}
-      .brand{min-width:auto}
-      .hero-grid{grid-template-columns:1fr}
-      .hero h1{font-size:34px;max-width:none}
-      .grid-3,.grid-2,.pricing,.two-col,.modal-grid{grid-template-columns:1fr}
-      .section-head{flex-direction:column;align-items:flex-start}
-      .section-head p{text-align:left}
+    /* Tablet/Desktop */
+    @media (min-width: 700px){
+      .wrap{padding:0 18px}
+      .nav-inner{height:70px}
+      .brand-sub{max-width:none}
+      .hero{padding:22px}
+      .hero h1{font-size:38px}
+      .hero-actions{display:flex;flex-wrap:wrap}
+      .grid-2{grid-template-columns:repeat(2,1fr)}
+      .pricing{grid-template-columns:repeat(2,1fr)}
+      .btn-row{display:flex;flex-wrap:wrap}
+      .btn-row .btn{font-size:13px}
+      .sheet{
+        left:50%; right:auto; bottom:16px;
+        width:min(760px, calc(100% - 24px));
+        transform:translate(-50%, 120%);
+        border-radius:20px;
+        border-bottom:1px solid var(--line-2);
+        max-height:min(88vh, 720px);
+      }
+      .sheet.open{transform:translate(-50%, 0)}
+      .sheet-body{grid-template-columns:1fr 1fr}
+      .sheet-grid-actions{grid-template-columns:1fr 1fr}
+      .toast{bottom:20px}
+    }
+
+    @media (min-width: 980px){
+      .desktop-links{
+        display:flex; gap:8px; align-items:center;
+      }
+      .desktop-links a{
+        font-size:13px; color:var(--muted);
+        padding:8px 10px; border-radius:999px;
+        border:1px solid transparent;
+      }
+      .desktop-links a:hover{
+        color:var(--text);
+        border-color:var(--line);
+        background:rgba(255,255,255,.03);
+      }
+
+      .hero-grid{
+        display:grid;
+        grid-template-columns:1.06fr .94fr;
+        gap:14px;
+        align-items:start;
+      }
+      .hero h1{font-size:44px}
+      .hero-side{display:grid;gap:10px}
+      .mini-points{margin-top:0}
+      .grid-3{grid-template-columns:repeat(3,1fr)}
+      .bottom-cta{display:none}
+      body.with-bottom-pad{padding-bottom:0}
     }
   </style>
 </head>
-<body>
+<body class="with-bottom-pad">
 
   <!-- NAV -->
   <div class="nav">
     <div class="wrap nav-inner">
-      <div class="brand" id="goHome" aria-label="Ir para a página inicial">
-        <div class="brand-mark" aria-hidden="true">
-          <!-- logo clean (sem personagem) -->
-          <svg viewBox="0 0 64 64" width="28" height="28">
+      <div class="brand" id="goHome">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="22" height="22">
             <defs>
-              <linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#ff5cd6"/>
-                <stop offset=".55" stop-color="#8a5bff"/>
-                <stop offset="1" stop-color="#33d6ff"/>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ff62c8"/>
+                <stop offset=".55" stop-color="#7c5cff"/>
+                <stop offset="1" stop-color="#2fd0ff"/>
               </linearGradient>
             </defs>
-            <path d="M18 35c-4-3-6-7-6-13 0-9 6-16 15-16 3 0 6 1 8 3 2-2 5-3 8-3 9 0 15 7 15 16 0 6-2 10-6 13-1 1-2 3-2 5 0 5-3 8-8 8-2 0-4-1-6-3-2 2-4 3-6 3-5 0-8-3-8-8 0-2-1-4-2-5Z" fill="url(#logoG)" opacity=".95"/>
-            <path d="M18 31h28" stroke="white" stroke-opacity=".82" stroke-width="4.8" stroke-linecap="round"/>
-            <path d="M21 24h22" stroke="white" stroke-opacity=".18" stroke-width="4.8" stroke-linecap="round"/>
-            <path d="M22 38h20" stroke="white" stroke-opacity=".18" stroke-width="4.8" stroke-linecap="round"/>
+            <path d="M18 34c-4-3-6-7-6-12 0-9 6-16 15-16 3 0 6 1 8 3 2-2 5-3 8-3 9 0 15 7 15 16 0 5-2 9-6 12-1 1-2 3-2 5 0 5-3 8-8 8-2 0-4-1-6-3-2 2-4 3-6 3-5 0-8-3-8-8 0-2-1-4-2-5Z" fill="url(#g1)" opacity=".95"/>
+            <path d="M20 31h24" stroke="#fff" stroke-opacity=".85" stroke-width="4.3" stroke-linecap="round"/>
           </svg>
         </div>
-        <div>
-          <div class="brand-title">Reprograma <span class="n">30</span></div>
+        <div class="brand-text">
+          <div class="brand-title">Reprograma <span>30</span></div>
           <div class="brand-sub" id="navSubtitle">Método Anti-Vício • Um dia por vez</div>
         </div>
       </div>
 
-      <div class="nav-links" id="navLinksHome">
-        <a href="#metodo">Método</a>
+      <div class="desktop-links" id="navLinksHome">
         <a href="#identificar">Trilhas</a>
-        <a href="#valor">Plataforma</a>
+        <a href="#metodo">Método</a>
         <a href="#planos">Planos</a>
         <a href="#faq">FAQ</a>
       </div>
-
-      <div class="nav-links hidden" id="navLinksTrilha">
+      <div class="desktop-links hidden" id="navLinksTrilha">
         <a href="#trilha">Trilha</a>
         <a href="#checkin">Check-in</a>
         <a href="#planos">Assinar</a>
       </div>
 
       <div class="nav-actions">
-        <button class="btn btn-ghost btn-sm" id="btnCrisisTop" type="button">Modo crise</button>
+        <button class="btn btn-ghost btn-sm" id="btnCrisisTop" type="button">Crise</button>
         <button class="btn btn-primary btn-sm" id="btnPrimaryTop" type="button">Começar</button>
       </div>
     </div>
@@ -681,7 +669,7 @@
         <div class="hero">
           <div class="hero-grid">
             <div>
-              <div class="hero-kicker">
+              <div class="pills">
                 <span class="pill"><span class="dot"></span>Sem julgamento</span>
                 <span class="pill">Privacidade</span>
                 <span class="pill">Um dia por vez</span>
@@ -690,29 +678,12 @@
               <h1>Você não é fraco. Você está preso em um ciclo.</h1>
 
               <p class="lead">
-                O <b>Reprograma 30</b> é um método prático de reestruturação comportamental para pessoas que querem retomar o controle de vícios e compulsões.
-                Sem julgamento. Com passos claros. Um dia por vez.
+                O <b>Reprograma 30</b> é um método prático de reestruturação comportamental para pessoas que querem retomar o controle de vícios e compulsões — com passos claros, estrutura diária e progresso visível.
               </p>
 
-              <div class="hero-cta">
-                <button class="btn btn-primary" id="btnStartIdentify" type="button">Quero me identificar e começar</button>
-                <a class="btn btn-ghost" href="#metodo">Entender como funciona</a>
-                <button class="btn btn-soft" id="btnCrisisHero" type="button">Abrir modo crise</button>
-              </div>
-
-              <div class="hero-list">
-                <div class="item">
-                  <span class="spark"></span>
-                  <div><b>Trilhas específicas por vício</b><span>Apostas • Álcool • Cigarro • Pornografia • Drogas</span></div>
-                </div>
-                <div class="item">
-                  <span class="spark"></span>
-                  <div><b>Estrutura prática de 30 dias</b><span>Passos objetivos e aplicáveis no dia a dia</span></div>
-                </div>
-                <div class="item">
-                  <span class="spark"></span>
-                  <div><b>Modo crise + check-in</b><span>Ferramenta para o momento crítico e progresso visível</span></div>
-                </div>
+              <div class="hero-actions">
+                <button class="btn btn-primary btn-block" id="btnStartIdentify" type="button">Quero me identificar e começar</button>
+                <a class="btn btn-ghost btn-block" href="#metodo">Entender como funciona</a>
               </div>
 
               <div class="disclaimer">
@@ -722,24 +693,23 @@
             </div>
 
             <div class="hero-side">
-              <div class="mini-card">
-                <h3>O que a pessoa encontra ao entrar</h3>
-                <p>Trilha por vício, plano de 30 dias, modo crise, check-in diário e recompensas visuais para manter consistência.</p>
-              </div>
-
-              <div class="mini-card">
-                <h3>Compromisso com responsabilidade</h3>
-                <p>O Reprograma 30 não promete milagre. A proposta é oferecer estrutura, clareza e apoio prático para recuperação de controle.</p>
-              </div>
-
-              <div class="mini-card">
-                <h3>Motivação oscila. Estrutura permanece.</h3>
-                <p>Muita recaída acontece em momentos de cansaço, ansiedade, solidão e gatilho. O método foi pensado para funcionar justamente aí.</p>
-              </div>
-
-              <div class="mini-card">
-                <h3>Links de divulgação por trilha</h3>
-                <p>Você pode divulgar links diretos como <b>#apostas</b>, <b>#alcool</b>, <b>#fumar</b>, <b>#pornografia</b> e <b>#drogas</b>.</p>
+              <div class="mini-points">
+                <div class="mini-point">
+                  <span class="spark"></span>
+                  <div><b>Trilhas específicas</b><span>Apostas, álcool, cigarro, pornografia e drogas.</span></div>
+                </div>
+                <div class="mini-point">
+                  <span class="spark"></span>
+                  <div><b>Modo crise</b><span>Ferramenta para o momento do impulso.</span></div>
+                </div>
+                <div class="mini-point">
+                  <span class="spark"></span>
+                  <div><b>Check-in e progresso</b><span>Streak, badges, certificado e relatório local.</span></div>
+                </div>
+                <div class="mini-point">
+                  <span class="spark"></span>
+                  <div><b>Sem promessa milagrosa</b><span>Foco em estrutura, consistência e retomada de controle.</span></div>
+                </div>
               </div>
             </div>
           </div>
@@ -755,60 +725,60 @@
         </div>
 
         <div class="grid grid-3">
-          <div class="card choice" data-v="apostas" tabindex="0" role="button">
-            <div>
+          <div class="card choice" data-v="apostas" role="button" tabindex="0">
+            <div class="choice-top">
               <h3>🎯 Apostas</h3>
-              <p>Perda de dinheiro, ansiedade, “só mais uma”, tentativa de recuperar prejuízo, culpa e impulso no celular.</p>
-              <div class="divider"></div>
-              <span class="badge bad">urgência</span>
-              <span class="badge warn">impulso</span>
-              <span class="badge warn">gatilho digital</span>
+              <span class="badge good">Abrir</span>
             </div>
-            <div class="choice-right"><span class="badge good">Abrir</span></div>
+            <p>Perda de dinheiro, ansiedade, “só mais uma”, tentativa de recuperar prejuízo e impulso no celular.</p>
+            <div class="divider"></div>
+            <span class="badge bad">urgência</span>
+            <span class="badge warn">impulso</span>
+            <span class="badge warn">digital</span>
           </div>
 
-          <div class="card choice" data-v="alcool" tabindex="0" role="button">
-            <div>
+          <div class="card choice" data-v="alcool" role="button" tabindex="0">
+            <div class="choice-top">
               <h3>🍺 Álcool</h3>
-              <p>Uso por estresse, rotina social, fim de semana, recaídas e dificuldade de manter consistência.</p>
-              <div class="divider"></div>
-              <span class="badge warn">social</span>
-              <span class="badge warn">rotina</span>
+              <span class="badge good">Abrir</span>
             </div>
-            <div class="choice-right"><span class="badge good">Abrir</span></div>
+            <p>Uso por estresse, rotina social, fim de semana, recaídas e dificuldade de manter consistência.</p>
+            <div class="divider"></div>
+            <span class="badge warn">social</span>
+            <span class="badge warn">rotina</span>
           </div>
 
-          <div class="card choice" data-v="fumar" tabindex="0" role="button">
-            <div>
+          <div class="card choice" data-v="fumar" role="button" tabindex="0">
+            <div class="choice-top">
               <h3>🚬 Cigarro</h3>
-              <p>Hábito automático, ansiedade, “pausas” durante o dia, gatilhos fixos e dependência de rotina.</p>
-              <div class="divider"></div>
-              <span class="badge warn">hábito</span>
-              <span class="badge warn">ansiedade</span>
+              <span class="badge good">Abrir</span>
             </div>
-            <div class="choice-right"><span class="badge good">Abrir</span></div>
+            <p>Hábito automático, ansiedade, “pausas” durante o dia, gatilhos fixos e dependência de rotina.</p>
+            <div class="divider"></div>
+            <span class="badge warn">hábito</span>
+            <span class="badge warn">ansiedade</span>
           </div>
 
-          <div class="card choice" data-v="pornografia" tabindex="0" role="button">
-            <div>
+          <div class="card choice" data-v="pornografia" role="button" tabindex="0">
+            <div class="choice-top">
               <h3>🧠 Pornografia</h3>
-              <p>Compulsão, escapismo, culpa, gatilhos digitais, perda de foco e sensação de descontrole.</p>
-              <div class="divider"></div>
-              <span class="badge warn">gatilho digital</span>
-              <span class="badge warn">isolamento</span>
+              <span class="badge good">Abrir</span>
             </div>
-            <div class="choice-right"><span class="badge good">Abrir</span></div>
+            <p>Compulsão, escapismo, culpa, gatilhos digitais, perda de foco e sensação de descontrole.</p>
+            <div class="divider"></div>
+            <span class="badge warn">digital</span>
+            <span class="badge warn">isolamento</span>
           </div>
 
-          <div class="card choice" data-v="drogas" tabindex="0" role="button">
-            <div>
+          <div class="card choice" data-v="drogas" role="button" tabindex="0">
+            <div class="choice-top">
               <h3>⚠️ Drogas</h3>
-              <p>Gatilhos sociais, ambiente, fuga emocional, recaídas e necessidade de estrutura e proteção.</p>
-              <div class="divider"></div>
-              <span class="badge bad">atenção</span>
-              <span class="badge warn">apoio</span>
+              <span class="badge good">Abrir</span>
             </div>
-            <div class="choice-right"><span class="badge good">Abrir</span></div>
+            <p>Gatilhos sociais, ambiente, fuga emocional, recaídas e necessidade de proteção e estrutura.</p>
+            <div class="divider"></div>
+            <span class="badge bad">atenção</span>
+            <span class="badge warn">apoio</span>
           </div>
 
           <div class="card">
@@ -825,33 +795,31 @@
       <div class="wrap">
         <div class="section-head">
           <h2>Como o Reprograma 30 funciona</h2>
-          <p>Uma lógica simples, prática e repetível para sair do automático e recuperar o controle.</p>
+          <p>Uma estrutura simples para sair do automático e recuperar o controle no dia a dia.</p>
         </div>
 
-        <div class="grid grid-3">
+        <div class="grid grid-2">
           <div class="card">
             <h3>1) Consciência</h3>
             <p>Entender gatilhos, horários, emoções e padrões que alimentam o ciclo.</p>
           </div>
           <div class="card">
             <h3>2) Interrupção</h3>
-            <p>Aplicar barreiras, ações rápidas e estratégias para atravessar o momento de impulso.</p>
+            <p>Aplicar barreiras e ações rápidas para atravessar o momento de impulso.</p>
           </div>
           <div class="card">
             <h3>3) Reconstrução</h3>
-            <p>Substituir o hábito por rotinas e ações funcionais que reforçam comportamento saudável.</p>
+            <p>Substituir o hábito por ações funcionais e rotina mais estável.</p>
+          </div>
+          <div class="card">
+            <h3>4) Consolidação</h3>
+            <p>Manter progresso, prevenir recaídas e construir continuidade.</p>
           </div>
         </div>
 
-        <div class="grid grid-2" style="margin-top:12px">
-          <div class="card">
-            <h3>4) Consolidação</h3>
-            <p>Manter progresso, prevenir recaídas e construir continuidade com uma estrutura sustentável.</p>
-          </div>
-          <div class="card">
-            <h3>O ponto principal</h3>
-            <p><b>A diferença não está em “querer mais”. Está em ter estrutura quando a vontade falha.</b></p>
-          </div>
+        <div class="card" style="margin-top:10px">
+          <h3>O ponto principal</h3>
+          <p><b>A diferença não está em “querer mais”. Está em ter estrutura quando a vontade falha.</b></p>
         </div>
       </div>
     </section>
@@ -860,44 +828,33 @@
       <div class="wrap">
         <div class="section-head">
           <h2>O que você encontra dentro da plataforma</h2>
-          <p>Tudo foi pensado para ser simples de usar, prático no dia a dia e aplicável até nos momentos mais difíceis.</p>
+          <p>Tudo pensado para ser simples, direto e útil no dia a dia — inclusive em momentos difíceis.</p>
         </div>
 
         <div class="grid grid-2">
           <div class="card">
-            <h3>Recursos inclusos</h3>
-            <ul class="feature-list" style="margin-top:2px">
-              <li><span class="check">✓</span><span>Trilhas organizadas por tipo de vício</span></li>
-              <li><span class="check">✓</span><span>Estrutura de 30 dias com passos práticos</span></li>
-              <li><span class="check">✓</span><span>Modo Crise para momentos de impulso</span></li>
+            <h3>Recursos incluídos</h3>
+            <ul class="feature-list">
+              <li><span class="check">✓</span><span>Trilhas por tipo de vício</span></li>
+              <li><span class="check">✓</span><span>Estrutura prática de 30 dias</span></li>
+              <li><span class="check">✓</span><span>Modo crise para impulso</span></li>
               <li><span class="check">✓</span><span>Check-in diário com progresso visível</span></li>
-              <li><span class="check">✓</span><span>Recompensas visuais (badges, certificado e relatório)</span></li>
-              <li><span class="check">✓</span><span>Conteúdo direto, sem julgamento e sem enrolação</span></li>
+              <li><span class="check">✓</span><span>Badges, certificado e relatório (local)</span></li>
+              <li><span class="check">✓</span><span>Conteúdo direto e sem julgamento</span></li>
             </ul>
           </div>
 
           <div class="card">
-            <h3>Para quem é o Reprograma 30</h3>
-            <ul class="feature-list" style="margin-top:2px">
-              <li><span class="check">✓</span><span>Para quem quer retomar o controle de compulsões e vícios</span></li>
-              <li><span class="check">✓</span><span>Para quem já tentou parar sozinho e voltou ao mesmo ciclo</span></li>
-              <li><span class="check">✓</span><span>Para quem precisa de estrutura prática no dia a dia</span></li>
-              <li><span class="check">✓</span><span>Para quem quer começar agora, sem esperar “motivação perfeita”</span></li>
+            <h3>Para quem é</h3>
+            <ul class="feature-list">
+              <li><span class="check">✓</span><span>Quem quer retomar o controle</span></li>
+              <li><span class="check">✓</span><span>Quem já tentou sozinho e voltou ao ciclo</span></li>
+              <li><span class="check">✓</span><span>Quem precisa de estrutura prática</span></li>
+              <li><span class="check">✓</span><span>Quem quer começar agora</span></li>
             </ul>
-
             <div class="divider"></div>
-            <p class="small danger">
-              Não substitui tratamento médico/psiquiátrico. Em casos graves, o ideal é usar junto com acompanhamento profissional.
-            </p>
+            <p class="small">Não substitui tratamento médico/psiquiátrico. Em casos graves, o ideal é usar com apoio profissional.</p>
           </div>
-        </div>
-
-        <div class="card" style="margin-top:12px">
-          <h3>O que pode mudar quando você aplica com consistência</h3>
-          <p>
-            Mais consciência dos gatilhos, menos impulsividade no momento crítico, mais sensação de controle, melhora na rotina/foco/energia e redução de recaídas.
-            <b>O objetivo não é perfeição. É recuperação de controle.</b>
-          </p>
         </div>
       </div>
     </section>
@@ -914,14 +871,13 @@
             <h3>Mensal</h3>
             <div class="money">R$ 29 <small>/ mês</small></div>
             <p class="small">Ideal para começar agora e testar a plataforma com acesso completo.</p>
-
-            <ul class="feature-list" style="margin-top:12px">
+            <div class="divider"></div>
+            <ul class="feature-list">
               <li><span class="check">✓</span><span>Acesso às trilhas</span></li>
               <li><span class="check">✓</span><span>Estrutura de 30 dias</span></li>
-              <li><span class="check">✓</span><span>Modo crise + check-in + progresso</span></li>
+              <li><span class="check">✓</span><span>Modo crise + check-in</span></li>
             </ul>
-
-            <div style="margin-top:14px">
+            <div style="margin-top:12px">
               <a class="btn btn-primary btn-block" href="https://pay.kiwify.com.br/RrMdJme" target="_blank" rel="noopener">Assinar mensal</a>
             </div>
           </div>
@@ -930,21 +886,20 @@
             <span class="ribbon">MAIS VENDIDO</span>
             <h3>Trimestral</h3>
             <div class="money">R$ 69 <small>/ 3 meses</small></div>
-            <p class="small">Melhor custo-benefício para quem quer tempo suficiente para consolidar resultados.</p>
-
-            <ul class="feature-list" style="margin-top:12px">
+            <p class="small">Melhor custo-benefício para quem quer mais tempo para consolidar resultados.</p>
+            <div class="divider"></div>
+            <ul class="feature-list">
               <li><span class="check">✓</span><span>Melhor valor por período</span></li>
               <li><span class="check">✓</span><span>Mais tempo para consistência</span></li>
               <li><span class="check">✓</span><span>Continuidade e prevenção de recaída</span></li>
             </ul>
-
-            <div style="margin-top:14px">
+            <div style="margin-top:12px">
               <a class="btn btn-primary btn-block" href="https://pay.kiwify.com.br/Kgog3p3" target="_blank" rel="noopener">Assinar trimestral</a>
             </div>
           </div>
         </div>
 
-        <p class="small" style="margin-top:12px">Pagamento processado pela Kiwify.</p>
+        <p class="small" style="margin-top:10px">Pagamento processado pela Kiwify.</p>
       </div>
     </section>
 
@@ -952,23 +907,23 @@
       <div class="wrap">
         <div class="section-head">
           <h2>Perguntas frequentes</h2>
-          <p>Respostas objetivas para transmitir confiança e reduzir dúvidas antes da assinatura.</p>
+          <p>Respostas claras para reduzir dúvidas e passar confiança.</p>
         </div>
 
         <div class="faq-list" id="faqList">
           <div class="faq-item">
             <button class="faq-btn" type="button" aria-expanded="false">
-              <span>1. Isso substitui terapia ou tratamento?</span>
+              <span>Isso substitui terapia ou tratamento?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-panel">
-              Não. O Reprograma 30 é um suporte educacional/comportamental. Em casos moderados ou graves, o ideal é usar junto com acompanhamento profissional.
+              Não. O Reprograma 30 é suporte educacional/comportamental. Em casos moderados ou graves, o ideal é usar junto com acompanhamento profissional.
             </div>
           </div>
 
           <div class="faq-item">
             <button class="faq-btn" type="button" aria-expanded="false">
-              <span>2. Se eu recair, significa que falhei?</span>
+              <span>Se eu recair, significa que falhei?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-panel">
@@ -978,7 +933,7 @@
 
           <div class="faq-item">
             <button class="faq-btn" type="button" aria-expanded="false">
-              <span>3. Posso trocar de trilha depois?</span>
+              <span>Posso trocar de trilha depois?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-panel">
@@ -988,7 +943,7 @@
 
           <div class="faq-item">
             <button class="faq-btn" type="button" aria-expanded="false">
-              <span>4. Quanto tempo por dia eu preciso?</span>
+              <span>Quanto tempo por dia eu preciso?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-panel">
@@ -998,21 +953,11 @@
 
           <div class="faq-item">
             <button class="faq-btn" type="button" aria-expanded="false">
-              <span>5. Como funcionam as recompensas sem custo?</span>
+              <span>Como funcionam as recompensas sem custo?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-panel">
-              As recompensas visuais (badges, certificado e relatório) são geradas localmente no navegador, sem custo extra.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-btn" type="button" aria-expanded="false">
-              <span>6. Posso usar de forma discreta?</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-panel">
-              Sim. O objetivo é oferecer um ambiente sem julgamento, com foco em apoio e aplicação prática.
+              Badges, certificado e relatório são gerados localmente no navegador, sem custo extra.
             </div>
           </div>
         </div>
@@ -1030,12 +975,12 @@
     </footer>
   </main>
 
-  <!-- TRILHA VIEW -->
+  <!-- TRILHA -->
   <main id="viewTrilha" class="hidden">
     <header>
       <div class="wrap">
         <div class="hero">
-          <div class="hero-kicker">
+          <div class="pills">
             <span class="pill"><span class="dot"></span><span id="pillType">Trilha</span></span>
             <span class="pill">8–12 min/dia</span>
             <span class="pill">Progresso visível</span>
@@ -1044,15 +989,13 @@
           <h1 id="trTitle">Trilha</h1>
           <p class="lead" id="trDesc">...</p>
 
-          <div class="hero-cta">
-            <button class="btn btn-primary" id="btnDay1" type="button">Começar Dia 1</button>
-            <button class="btn btn-ghost" id="btnCrisisTrilha" type="button">Modo crise</button>
-            <a class="btn btn-soft" href="#planos">Ver planos</a>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-block" id="btnDay1" type="button">Começar Dia 1</button>
+            <button class="btn btn-ghost btn-block" id="btnCrisisTrilha" type="button">Abrir modo crise</button>
           </div>
 
           <div class="disclaimer">
-            Suporte educacional/comportamental. Não substitui tratamento profissional.
-            Em situação de risco, procure ajuda profissional imediatamente.
+            Suporte educacional/comportamental. Não substitui tratamento profissional. Em situação de risco, procure ajuda profissional imediatamente.
           </div>
         </div>
       </div>
@@ -1062,7 +1005,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2>Estrutura da trilha (30 dias)</h2>
-          <p>Mesma lógica do método — mudam os gatilhos, exemplos e ações práticas de cada caso.</p>
+          <p>Mesma lógica do método — mudam os exemplos, gatilhos e ações práticas.</p>
         </div>
 
         <div class="grid grid-2">
@@ -1084,7 +1027,7 @@
           </div>
         </div>
 
-        <div class="card" style="margin-top:12px">
+        <div class="card" style="margin-top:10px">
           <h3>O que pode mudar em 7 dias</h3>
           <p id="in7">...</p>
           <div class="divider"></div>
@@ -1101,7 +1044,7 @@
           <p>Salvo no navegador. Zero custo. Progresso visível para reforçar consistência.</p>
         </div>
 
-        <div class="two-col">
+        <div class="grid grid-2">
           <div class="card">
             <h3>Seu progresso</h3>
             <div class="divider"></div>
@@ -1112,37 +1055,37 @@
             </div>
             <div class="progress"><div id="progBar"></div></div>
 
-            <div class="divider"></div>
+            <div class="field-wrap">
+              <label class="field-label" for="ciDid">Hoje eu…</label>
+              <select id="ciDid" class="field">
+                <option value="ok">Não caí</option>
+                <option value="slip">Quase caí</option>
+                <option value="relapse">Caí</option>
+              </select>
+            </div>
 
-            <label class="field-label" for="ciDid">Hoje eu…</label>
-            <select class="field" id="ciDid">
-              <option value="ok">Não caí</option>
-              <option value="slip">Quase caí</option>
-              <option value="relapse">Caí</option>
-            </select>
+            <div class="field-wrap">
+              <label class="field-label" for="ciUrge">Vontade (0–5)</label>
+              <input id="ciUrge" type="range" min="0" max="5" value="2">
+            </div>
 
-            <div class="divider"></div>
+            <div class="field-wrap">
+              <label class="field-label" for="ciTrig">Gatilho principal</label>
+              <select id="ciTrig" class="field">
+                <option>Tédio</option>
+                <option>Ansiedade/Estresse</option>
+                <option>Tristeza/Solidão</option>
+                <option>Ambiente/Social</option>
+                <option>Celular/Feed</option>
+              </select>
+            </div>
 
-            <label class="field-label" for="ciUrge">Vontade (0 a 5)</label>
-            <input id="ciUrge" type="range" min="0" max="5" value="2">
-
-            <div class="divider"></div>
-
-            <label class="field-label" for="ciTrig">Gatilho principal</label>
-            <select class="field" id="ciTrig">
-              <option>Tédio</option>
-              <option>Ansiedade/Estresse</option>
-              <option>Tristeza/Solidão</option>
-              <option>Ambiente/Social</option>
-              <option>Celular/Feed</option>
-            </select>
-
-            <div class="btn-row" style="margin-top:12px">
-              <button class="btn btn-primary" id="btnCheckin" type="button">Salvar check-in</button>
+            <div class="btn-row">
+              <button class="btn btn-primary" id="btnCheckin" type="button">Salvar</button>
               <button class="btn btn-ghost" id="btnReset" type="button">Zerar</button>
             </div>
 
-            <div class="btn-row" style="margin-top:10px">
+            <div class="btn-row three">
               <button class="btn btn-ghost" id="btnBadges" type="button">Badges</button>
               <button class="btn btn-ghost" id="btnCert" type="button">Certificado</button>
               <button class="btn btn-ghost" id="btnReport" type="button">Relatório</button>
@@ -1151,8 +1094,7 @@
 
           <div class="card">
             <h3>Recompensas (zero custo)</h3>
-            <p class="small">Progresso visível mantém você no processo. O foco é reforçar consistência, não perfeição.</p>
-
+            <p class="small">Progresso visível mantém você no processo. O foco é consistência, não perfeição.</p>
             <div class="divider"></div>
             <p class="small" id="rewardText">Faça 7 dias seguidos sem cair e desbloqueie certificado + badge.</p>
 
@@ -1160,13 +1102,10 @@
             <h3>Assinar acesso completo</h3>
             <p class="small">Para liberar conteúdo completo das trilhas e continuidade de 90 dias.</p>
 
-            <div class="btn-row" style="margin-top:10px">
-              <a class="btn btn-primary btn-block" href="https://pay.kiwify.com.br/RrMdJme" target="_blank" rel="noopener">Assinar mensal</a>
-              <a class="btn btn-soft btn-block" href="https://pay.kiwify.com.br/Kgog3p3" target="_blank" rel="noopener">Assinar trimestral</a>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="https://pay.kiwify.com.br/RrMdJme" target="_blank" rel="noopener">Mensal</a>
+              <a class="btn btn-soft" href="https://pay.kiwify.com.br/Kgog3p3" target="_blank" rel="noopener">Trimestral</a>
             </div>
-
-            <div class="divider"></div>
-            <p class="small">Dica: você pode divulgar link direto da trilha (ex.: <b>seusite.com/#apostas</b>).</p>
           </div>
         </div>
       </div>
@@ -1175,20 +1114,20 @@
     <section id="planos">
       <div class="wrap">
         <div class="section-head">
-          <h2>Escolha seu plano de acesso</h2>
-          <p>Mensal ou trimestral. Mesmos links Kiwify.</p>
+          <h2>Planos de acesso</h2>
+          <p>Mesmos links Kiwify para finalizar a assinatura.</p>
         </div>
 
         <div class="pricing">
           <div class="card price">
             <h3>Mensal</h3>
             <div class="money">R$ 29 <small>/ mês</small></div>
-            <ul class="feature-list" style="margin-top:12px">
+            <ul class="feature-list">
               <li><span class="check">✓</span><span>Todas as trilhas</span></li>
               <li><span class="check">✓</span><span>Conteúdo completo 30 dias</span></li>
               <li><span class="check">✓</span><span>Modo crise e progresso</span></li>
             </ul>
-            <div style="margin-top:14px">
+            <div style="margin-top:12px">
               <a class="btn btn-primary btn-block" href="https://pay.kiwify.com.br/RrMdJme" target="_blank" rel="noopener">Assinar mensal</a>
             </div>
           </div>
@@ -1197,12 +1136,12 @@
             <span class="ribbon">MAIS VENDIDO</span>
             <h3>Trimestral</h3>
             <div class="money">R$ 69 <small>/ 3 meses</small></div>
-            <ul class="feature-list" style="margin-top:12px">
-              <li><span class="check">✓</span><span>Melhor custo/benefício</span></li>
+            <ul class="feature-list">
+              <li><span class="check">✓</span><span>Melhor custo-benefício</span></li>
               <li><span class="check">✓</span><span>90 dias para consolidar</span></li>
               <li><span class="check">✓</span><span>Mais continuidade</span></li>
             </ul>
-            <div style="margin-top:14px">
+            <div style="margin-top:12px">
               <a class="btn btn-primary btn-block" href="https://pay.kiwify.com.br/Kgog3p3" target="_blank" rel="noopener">Assinar trimestral</a>
             </div>
           </div>
@@ -1212,100 +1151,105 @@
 
     <footer>
       <div class="wrap">
-        <p class="small">
-          <b>Reprograma 30</b> é suporte educacional/comportamental. Não substitui tratamento profissional.
-        </p>
+        <p class="small"><b>Reprograma 30</b> é suporte educacional/comportamental. Não substitui tratamento profissional.</p>
         <p class="small">© <span id="yearTrilha"></span> Reprograma 30.</p>
       </div>
     </footer>
   </main>
 
-  <!-- MODAL CRISE -->
+  <!-- Bottom CTA mobile -->
+  <div class="bottom-cta" id="bottomCta">
+    <button class="btn btn-ghost" id="btnBottomCrisis" type="button">Modo crise</button>
+    <button class="btn btn-primary" id="btnBottomMain" type="button">Começar</button>
+  </div>
+
+  <!-- Crisis Sheet -->
   <div class="overlay" id="overlay"></div>
-  <div class="modal" id="crisisModal" role="dialog" aria-modal="true" aria-labelledby="crisisTitle">
-    <div class="modal-head">
+  <div class="sheet" id="crisisSheet" aria-modal="true" role="dialog" aria-labelledby="crisisTitle">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-head">
       <div>
         <h3 id="crisisTitle">Modo Crise</h3>
-        <p>Seu objetivo agora não é resolver a vida toda. É atravessar este momento sem cair no impulso.</p>
+        <p>Seu objetivo agora não é resolver tudo. É atravessar este momento sem cair no impulso.</p>
       </div>
-      <button class="icon-btn" id="btnCloseModal" type="button" aria-label="Fechar">✕</button>
+      <button class="icon-btn" id="btnCloseSheet" type="button" aria-label="Fechar">✕</button>
     </div>
 
-    <div class="modal-body">
-      <div class="modal-grid">
-        <div class="modal-card">
-          <h4>Respiração guiada (2 minutos)</h4>
-          <p>Inspire 4s • segure 2s • solte 6s. Reduzir a urgência fisiológica ajuda você a recuperar controle.</p>
+    <div class="sheet-body">
+      <div class="sheet-card">
+        <h4>Respiração guiada (2 min)</h4>
+        <p>Inspire 4s • segure 2s • solte 6s. Reduzir a urgência fisiológica ajuda a recuperar controle.</p>
 
-          <div class="breath-wrap">
-            <div class="breath-ball" id="breathBall" aria-hidden="true"></div>
-            <div class="timer">
-              <b id="breathTimer">02:00</b>
-              <span id="breathHint">Pronto para iniciar.</span>
-            </div>
-          </div>
-
-          <div class="btn-row" style="margin-top:12px">
-            <button class="btn btn-primary" id="btnBreathStart" type="button">Iniciar</button>
-            <button class="btn btn-ghost" id="btnBreathStop" type="button">Parar</button>
+        <div class="breath-box">
+          <div class="breath-ball" id="breathBall"></div>
+          <div class="timer">
+            <b id="breathTimer">02:00</b>
+            <span id="breathHint">Pronto para iniciar.</span>
           </div>
         </div>
 
-        <div class="modal-card">
-          <h4>Ações rápidas (30–60 segundos)</h4>
-          <p>Escolha uma ação agora. Mudar corpo e ambiente reduz impulso.</p>
-
-          <div class="btn-row" style="margin-top:10px">
-            <button class="btn btn-ghost" id="btnActionWater" type="button">Beber água</button>
-            <button class="btn btn-ghost" id="btnActionMove" type="button">Mover o corpo</button>
-            <button class="btn btn-ghost" id="btnActionCut" type="button">Cortar gatilho</button>
-            <button class="btn btn-soft" id="btnActionCheckin" type="button">Ir para check-in</button>
-          </div>
-
-          <div class="modal-note">
-            Se houver risco à sua segurança, procure ajuda profissional imediatamente (CVV 188 / Emergência 192).
-          </div>
+        <div class="sheet-grid-actions">
+          <button class="btn btn-primary" id="btnBreathStart" type="button">Iniciar</button>
+          <button class="btn btn-ghost" id="btnBreathStop" type="button">Parar</button>
         </div>
+      </div>
+
+      <div class="sheet-card">
+        <h4>Ações rápidas (30–60s)</h4>
+        <p>Escolha uma ação agora. Mudar corpo e ambiente reduz impulso.</p>
+
+        <div class="sheet-grid-actions">
+          <button class="btn btn-ghost" id="btnActionWater" type="button">Beber água</button>
+          <button class="btn btn-ghost" id="btnActionMove" type="button">Mover corpo</button>
+          <button class="btn btn-ghost" id="btnActionCut" type="button">Cortar gatilho</button>
+          <button class="btn btn-soft" id="btnActionCheckin" type="button">Ir check-in</button>
+        </div>
+
+        <div class="divider"></div>
+        <p class="small">Se houver risco à sua segurança, procure ajuda profissional imediatamente (CVV 188 / Emergência 192).</p>
       </div>
     </div>
   </div>
 
-  <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
   <script>
-    // Helpers
     const $ = (id) => document.getElementById(id);
 
     function toast(msg){
       const t = $("toast");
       t.textContent = msg;
       t.style.display = "block";
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => t.style.display = "none", 2600);
+      clearTimeout(window.__toast);
+      window.__toast = setTimeout(()=> t.style.display = "none", 2400);
     }
 
     $("yearHome").textContent = new Date().getFullYear();
     $("yearTrilha").textContent = new Date().getFullYear();
 
-    // Views
+    // Views / nav
     const viewHome = $("viewHome");
     const viewTrilha = $("viewTrilha");
     const navLinksHome = $("navLinksHome");
     const navLinksTrilha = $("navLinksTrilha");
     const navSubtitle = $("navSubtitle");
     const btnPrimaryTop = $("btnPrimaryTop");
+    const btnBottomMain = $("btnBottomMain");
+    const bottomCta = $("bottomCta");
+
+    function updateBottomCTA(){
+      const inHome = !viewHome.classList.contains("hidden");
+      btnBottomMain.textContent = inHome ? "Começar" : "Assinar";
+    }
 
     function showHome(push = true){
       viewHome.classList.remove("hidden");
       viewTrilha.classList.add("hidden");
-
       navLinksHome.classList.remove("hidden");
       navLinksTrilha.classList.add("hidden");
-
       navSubtitle.textContent = "Método Anti-Vício • Um dia por vez";
       btnPrimaryTop.textContent = "Começar";
-      btnPrimaryTop.onclick = null;
+      updateBottomCTA();
 
       if(push) history.pushState({view:"home"}, "", "#");
       window.scrollTo({top:0, behavior:"smooth"});
@@ -1313,18 +1257,14 @@
 
     function showTrilha(v, push = true){
       const d = DATA[v] || DATA.apostas;
-
       viewHome.classList.add("hidden");
       viewTrilha.classList.remove("hidden");
-
       navLinksHome.classList.add("hidden");
       navLinksTrilha.classList.remove("hidden");
-
       navSubtitle.textContent = d.pill;
       btnPrimaryTop.textContent = "Assinar";
-      btnPrimaryTop.onclick = () => document.getElementById("planos").scrollIntoView({behavior:"smooth", block:"start"});
-
       applyTrilha(v);
+      updateBottomCTA();
 
       if(push) history.pushState({view:"trilha", v}, "", "#" + v);
       window.scrollTo({top:0, behavior:"smooth"});
@@ -1332,59 +1272,55 @@
 
     $("goHome").addEventListener("click", () => showHome(true));
 
-    btnPrimaryTop.addEventListener("click", () => {
-      if(!viewHome.classList.contains("hidden")){
+    function handleMainCTA(){
+      const inHome = !viewHome.classList.contains("hidden");
+      if(inHome){
         document.getElementById("identificar").scrollIntoView({behavior:"smooth", block:"start"});
-      } else {
+      }else{
         document.getElementById("planos").scrollIntoView({behavior:"smooth", block:"start"});
       }
-    });
+    }
 
-    $("btnStartIdentify").addEventListener("click", () => {
-      document.getElementById("identificar").scrollIntoView({behavior:"smooth", block:"start"});
-    });
-    $("btnStartAny").addEventListener("click", () => showTrilha("apostas", true));
+    btnPrimaryTop.addEventListener("click", handleMainCTA);
+    btnBottomMain.addEventListener("click", handleMainCTA);
+    $("btnStartIdentify").addEventListener("click", ()=> document.getElementById("identificar").scrollIntoView({behavior:"smooth", block:"start"}));
+    $("btnStartAny").addEventListener("click", ()=> showTrilha("apostas", true));
 
-    // FAQ accordion (abre 1 por vez)
-    (function initFAQ(){
+    // FAQ accordion
+    (function(){
       const root = $("faqList");
-      if(!root) return;
-      const items = Array.from(root.querySelectorAll(".faq-item"));
-
-      items.forEach(item => {
+      const items = [...root.querySelectorAll(".faq-item")];
+      items.forEach(item=>{
         const btn = item.querySelector(".faq-btn");
         const icon = item.querySelector(".faq-icon");
-
-        btn.addEventListener("click", () => {
-          const isOpen = item.classList.contains("open");
-
-          items.forEach(i => {
+        btn.addEventListener("click", ()=>{
+          const open = item.classList.contains("open");
+          items.forEach(i=>{
             i.classList.remove("open");
-            i.querySelector(".faq-btn").setAttribute("aria-expanded", "false");
+            i.querySelector(".faq-btn").setAttribute("aria-expanded","false");
             i.querySelector(".faq-icon").textContent = "+";
           });
-
-          if(!isOpen){
+          if(!open){
             item.classList.add("open");
-            btn.setAttribute("aria-expanded", "true");
+            btn.setAttribute("aria-expanded","true");
             icon.textContent = "–";
           }
         });
       });
     })();
 
-    // Conteúdo das trilhas
+    // Trilhas content
     const DATA = {
       apostas:{
         pill:"Trilha • Apostas",
         title:"Apostas: recuperar controle e quebrar o ciclo do “só mais uma”",
         desc:"Você vai reduzir gatilhos digitais, organizar o momento crítico e reconstruir controle emocional e financeiro — um dia por vez.",
         p1:"Diagnóstico real de perdas e padrões, entendimento do ciclo do quase-ganho e mapeamento de gatilhos (tédio, ansiedade, celular e horários).",
-        p2:"Bloqueio de apps/sites, limpeza de feed, regra das 24h para decisões impulsivas e técnica de adiamento da vontade.",
-        p3:"Reorganização da rotina, redirecionamento de dopamina e reforço de controle financeiro e emocional.",
+        p2:"Bloqueio de apps/sites, limpeza de feed, regra das 24h, técnica de adiamento da vontade e plano de crise.",
+        p3:"Reorganização de rotina, redirecionamento de dopamina e reforço de controle financeiro e emocional.",
         p4:"Plano anti-recaída, continuidade de 90 dias e fortalecimento da identidade de quem retoma o controle.",
-        in7:"Mais clareza sobre gatilhos, menos impulsividade automática e mais controle nos momentos de risco.",
-        in30:"Mais organização, menos recaídas, mais controle emocional e financeiro, e rotina mais estável.",
+        in7:"Mais clareza sobre gatilhos e menos impulso automático nos momentos de risco.",
+        in30:"Mais organização, menos recaídas e mais controle emocional e financeiro.",
         day1Title:"Dia 1 — Diagnóstico real (Apostas)",
         day1Text:"Escreva quanto perdeu, quando costuma apostar, quais emoções aparecem antes, quais gatilhos digitais ativam a vontade e qual o custo invisível disso na sua vida. Clareza corta o automático."
       },
@@ -1394,10 +1330,10 @@
         desc:"Você vai mapear gatilhos sociais, criar alternativas reais e organizar uma rotina que sustente consistência.",
         p1:"Mapear quando, com quem e por que bebe, identificar emoções antes do uso e entender padrão de recaída em finais de semana e eventos.",
         p2:"Estratégias para situações sociais, regras de proteção pessoal, alternativas em encontros e plano rápido para gatilho social.",
-        p3:"Rotina de energia e descanso, redução de estresse com ações práticas e reforço de autocontrole.",
+        p3:"Rotina de energia e descanso, redução de estresse e reforço de autocontrole.",
         p4:"Prevenção de recaída em datas/eventos, continuidade e plano de retomada se houver queda.",
         in7:"Mais consciência de onde você escorrega e um plano melhor para lidar com situações sociais.",
-        in30:"Mais consistência, melhor energia e mais controle sobre os gatilhos de fim de semana.",
+        in30:"Mais consistência, melhor energia e mais controle sobre gatilhos de fim de semana.",
         day1Title:"Dia 1 — Mapa do padrão (Álcool)",
         day1Text:"Escreva quando você bebe, com quem, o que sente antes e o que acontece depois. Identifique 3 gatilhos e defina 1 mudança de ambiente para esta semana."
       },
@@ -1418,8 +1354,8 @@
         pill:"Trilha • Pornografia",
         title:"Pornografia: quebrar compulsão e reduzir gatilhos digitais",
         desc:"Você vai reduzir exposição, criar barreiras no ambiente digital e reconstruir rotina, foco e energia.",
-        p1:"Mapear horários críticos (principalmente à noite), identificar emoções antes do impulso e entender o ciclo culpa → repetição.",
-        p2:"Higiene digital, barreiras práticas, redução de estímulos, regra de atraso do impulso e protocolo de crise.",
+        p1:"Mapear horários críticos, identificar emoções antes do impulso e entender o ciclo culpa → repetição.",
+        p2:"Higiene digital, barreiras práticas, redução de estímulos e protocolo de crise para momentos críticos.",
         p3:"Substituição de hábito, rotina de foco/energia e organização de ambiente.",
         p4:"Prevenção de recaída, continuidade de 90 dias e fortalecimento de rotina.",
         in7:"Menos gatilhos digitais e mais controle sobre o horário crítico.",
@@ -1432,11 +1368,11 @@
         title:"Drogas: reduzir risco, reorganizar ambiente e construir consistência",
         desc:"Foco em ambiente, exposição, rotina e proteção. Em casos graves, o ideal é usar junto com apoio profissional.",
         p1:"Mapear ambientes, pessoas e situações de risco, identificar gatilhos emocionais e entender o ciclo emoção → uso → consequência.",
-        p2:"Plano de proteção pessoal, redução de exposição, estratégia de saída de situações de risco e protocolo para impulso.",
+        p2:"Plano de proteção pessoal, redução de exposição, estratégia de saída e protocolo para impulso.",
         p3:"Organização de rotina, ações substitutas e responsabilidade com check-in.",
-        p4:"Prevenção de recaída, continuidade, reforço de proteção ambiental e ajustes de rotina.",
+        p4:"Prevenção de recaída, continuidade e reforço de proteção ambiental.",
         in7:"Mais clareza sobre ambientes de risco e ações de proteção imediata.",
-        in30:"Mais estabilidade, menos exposição e mais chance de manter o controle com consistência.",
+        in30:"Mais estabilidade, menos exposição e mais chance de manter o controle.",
         day1Title:"Dia 1 — Ambiente e risco (Drogas)",
         day1Text:"Liste 3 ambientes/pessoas de risco e 3 ações de proteção. Se houver risco à sua segurança, procure ajuda profissional imediatamente."
       }
@@ -1447,7 +1383,6 @@
     function applyTrilha(v){
       currentV = v;
       const d = DATA[v] || DATA.apostas;
-
       $("pillType").textContent = d.pill;
       $("trTitle").textContent = d.title;
       $("trDesc").textContent = d.desc;
@@ -1457,15 +1392,14 @@
       $("p4").textContent = d.p4;
       $("in7").textContent = d.in7;
       $("in30").textContent = d.in30;
-
       localStorage.setItem("rp30_selected", v);
       updateCheckinUI();
     }
 
-    document.querySelectorAll(".choice[data-v]").forEach(el => {
-      const open = () => showTrilha(el.dataset.v, true);
+    document.querySelectorAll(".choice[data-v]").forEach(el=>{
+      const open = ()=> showTrilha(el.dataset.v, true);
       el.addEventListener("click", open);
-      el.addEventListener("keydown", (e) => {
+      el.addEventListener("keydown", e=>{
         if(e.key === "Enter" || e.key === " "){
           e.preventDefault();
           open();
@@ -1473,44 +1407,40 @@
       });
     });
 
-    $("btnDay1").addEventListener("click", () => {
+    $("btnDay1").addEventListener("click", ()=>{
       const d = DATA[currentV] || DATA.apostas;
-      alert(`${d.day1Title}\n\n${d.day1Text}\n\nExercício: escreva 10 linhas e faça seu check-in.`);
+      alert(`${d.day1Title}\n\n${d.day1Text}\n\nExercício: escreva 10 linhas e faça o check-in.`);
       document.getElementById("checkin").scrollIntoView({behavior:"smooth", block:"start"});
     });
 
-    // Modal crise
+    // Crisis sheet
     const overlay = $("overlay");
-    const crisisModal = $("crisisModal");
+    const sheet = $("crisisSheet");
+    const btnBottomCrisis = $("btnBottomCrisis");
 
-    function openCrisisModal(){
+    function openCrisis(){
       overlay.style.display = "block";
-      crisisModal.style.display = "block";
+      sheet.classList.add("open");
       document.body.style.overflow = "hidden";
     }
-    function closeCrisisModal(){
+    function closeCrisis(){
+      sheet.classList.remove("open");
       overlay.style.display = "none";
-      crisisModal.style.display = "none";
       document.body.style.overflow = "";
       stopBreathing();
     }
 
-    $("btnCrisisTop").addEventListener("click", openCrisisModal);
-    $("btnCrisisHero").addEventListener("click", openCrisisModal);
-    $("btnCrisisTrilha").addEventListener("click", openCrisisModal);
-    $("btnCloseModal").addEventListener("click", closeCrisisModal);
-    overlay.addEventListener("click", closeCrisisModal);
+    $("btnCrisisTop").addEventListener("click", openCrisis);
+    $("btnCrisisTrilha").addEventListener("click", openCrisis);
+    btnBottomCrisis.addEventListener("click", openCrisis);
+    $("btnCloseSheet").addEventListener("click", closeCrisis);
+    overlay.addEventListener("click", closeCrisis);
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeCrisis(); });
 
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape") closeCrisisModal();
-    });
-
-    // Respiração guiada
-    const breathBall = $("breathBall");
-    const breathTimer = $("breathTimer");
-    const breathHint = $("breathHint");
-    let breathInterval = null;
+    // Breathing
+    let breathTimerInterval = null;
     let breathSeconds = 120;
+    const breathBall = $("breathBall");
 
     function fmtTime(sec){
       const m = String(Math.floor(sec/60)).padStart(2,"0");
@@ -1518,49 +1448,48 @@
       return `${m}:${s}`;
     }
 
+    function stopBreathing(){
+      if(breathTimerInterval){
+        clearInterval(breathTimerInterval);
+        breathTimerInterval = null;
+      }
+      breathBall.classList.remove("breathing");
+    }
+
     function startBreathing(){
       stopBreathing();
       breathSeconds = 120;
-      breathTimer.textContent = fmtTime(breathSeconds);
-      breathHint.textContent = "Siga o ritmo visual.";
+      $("breathTimer").textContent = fmtTime(breathSeconds);
+      $("breathHint").textContent = "Siga o ritmo visual.";
       breathBall.classList.add("breathing");
 
-      breathInterval = setInterval(() => {
+      breathTimerInterval = setInterval(()=>{
         breathSeconds--;
-        breathTimer.textContent = fmtTime(Math.max(0, breathSeconds));
-
+        $("breathTimer").textContent = fmtTime(Math.max(0, breathSeconds));
         if(breathSeconds <= 0){
           stopBreathing();
-          breathTimer.textContent = "Feito ✅";
-          breathHint.textContent = "Boa. Agora escolha uma ação rápida.";
+          $("breathTimer").textContent = "Feito ✅";
+          $("breathHint").textContent = "Boa. Agora escolha uma ação rápida.";
           toast("Boa. Você reduziu a urgência.");
         }
       }, 1000);
     }
 
-    function stopBreathing(){
-      if(breathInterval){
-        clearInterval(breathInterval);
-        breathInterval = null;
-      }
-      breathBall.classList.remove("breathing");
-    }
-
     $("btnBreathStart").addEventListener("click", startBreathing);
-    $("btnBreathStop").addEventListener("click", () => {
+    $("btnBreathStop").addEventListener("click", ()=>{
       stopBreathing();
-      breathHint.textContent = "Pausado.";
+      $("breathHint").textContent = "Pausado.";
       toast("Respiração pausada.");
     });
 
-    $("btnActionWater").addEventListener("click", () => toast("Beba água agora e afaste-se do gatilho."));
-    $("btnActionMove").addEventListener("click", () => toast("Mova o corpo por 1 minuto. Só precisa vencer este momento."));
-    $("btnActionCut").addEventListener("click", () => toast("Corta o gatilho e muda de ambiente por 5 minutos."));
-    $("btnActionCheckin").addEventListener("click", () => {
-      closeCrisisModal();
+    $("btnActionWater").addEventListener("click", ()=> toast("Beba água agora e afaste-se do gatilho."));
+    $("btnActionMove").addEventListener("click", ()=> toast("Mova o corpo por 1 minuto. Só precisa vencer este momento."));
+    $("btnActionCut").addEventListener("click", ()=> toast("Corta o gatilho e muda de ambiente por 5 minutos."));
+    $("btnActionCheckin").addEventListener("click", ()=>{
+      closeCrisis();
       if(viewTrilha.classList.contains("hidden")){
         showTrilha(localStorage.getItem("rp30_selected") || "apostas", true);
-        setTimeout(() => document.getElementById("checkin").scrollIntoView({behavior:"smooth", block:"start"}), 280);
+        setTimeout(()=> document.getElementById("checkin").scrollIntoView({behavior:"smooth", block:"start"}), 250);
       } else {
         document.getElementById("checkin").scrollIntoView({behavior:"smooth", block:"start"});
       }
@@ -1568,58 +1497,45 @@
     });
 
     // Check-in local
-    function storageKey(){ return "rp30_checkins_" + currentV; }
-
+    function key(){ return "rp30_checkins_" + currentV; }
     function loadCheckins(){
-      try{
-        return JSON.parse(localStorage.getItem(storageKey()) || "[]");
-      }catch{
-        return [];
-      }
+      try { return JSON.parse(localStorage.getItem(key()) || "[]"); }
+      catch { return []; }
     }
-
     function saveCheckins(arr){
-      localStorage.setItem(storageKey(), JSON.stringify(arr));
+      localStorage.setItem(key(), JSON.stringify(arr));
     }
-
-    function formatDateBR(iso){
+    function dateBR(iso){
       return new Date(iso).toLocaleDateString("pt-BR");
     }
-
     function getStreak(arr){
-      let streak = 0;
-      for(let i = arr.length - 1; i >= 0; i--){
-        if(arr[i].did === "ok") streak++;
+      let s = 0;
+      for(let i = arr.length-1; i >= 0; i--){
+        if(arr[i].did === "ok") s++;
         else break;
       }
-      return streak;
+      return s;
     }
 
     function updateCheckinUI(){
       const arr = loadCheckins();
-      const last = arr.length ? arr[arr.length - 1].date : null;
+      const last = arr.length ? arr[arr.length-1].date : null;
       const streak = getStreak(arr);
 
-      $("last").textContent = last ? formatDateBR(last) : "—";
+      $("last").textContent = last ? dateBR(last) : "—";
       $("streak").textContent = String(streak);
 
-      const pct = Math.round((Math.min(streak,30) / 30) * 100);
+      const pct = Math.min(100, Math.round((Math.min(streak,30)/30)*100));
       $("progBar").style.width = pct + "%";
 
-      if(streak >= 30){
-        $("rewardText").textContent = "🏆 30 dias! Certificado e relatório liberados. Você venceu hoje, repetidas vezes.";
-      }else if(streak >= 14){
-        $("rewardText").textContent = "🔥 14 dias! Badge “Fortalecimento” desbloqueado.";
-      }else if(streak >= 7){
-        $("rewardText").textContent = "✅ 7 dias! Badge “Primeira Semana” + certificado liberado.";
-      }else if(streak >= 3){
-        $("rewardText").textContent = "✅ 3 dias! Badge “Início Forte” desbloqueado.";
-      }else{
-        $("rewardText").textContent = "Faça 7 dias seguidos sem cair e desbloqueie certificado + badge.";
-      }
+      if(streak >= 30) $("rewardText").textContent = "🏆 30 dias! Certificado e relatório liberados. Você venceu hoje, repetidas vezes.";
+      else if(streak >= 14) $("rewardText").textContent = "🔥 14 dias! Badge “Fortalecimento” desbloqueado.";
+      else if(streak >= 7) $("rewardText").textContent = "✅ 7 dias! Badge “Primeira Semana” + certificado liberado.";
+      else if(streak >= 3) $("rewardText").textContent = "✅ 3 dias! Badge “Início Forte” desbloqueado.";
+      else $("rewardText").textContent = "Faça 7 dias seguidos sem cair e desbloqueie certificado + badge.";
     }
 
-    $("btnCheckin").addEventListener("click", () => {
+    $("btnCheckin").addEventListener("click", ()=>{
       const arr = loadCheckins();
       arr.push({
         date: new Date().toISOString(),
@@ -1632,49 +1548,42 @@
       toast("Check-in salvo. Um dia por vez.");
     });
 
-    $("btnReset").addEventListener("click", () => {
-      localStorage.removeItem(storageKey());
+    $("btnReset").addEventListener("click", ()=>{
+      localStorage.removeItem(key());
       updateCheckinUI();
       toast("Progresso zerado.");
     });
 
-    $("btnBadges").addEventListener("click", () => {
+    $("btnBadges").addEventListener("click", ()=>{
       const streak = getStreak(loadCheckins());
       const badges = [];
       if(streak >= 3) badges.push("🏅 Início Forte (3 dias)");
       if(streak >= 7) badges.push("🏅 Primeira Semana (7 dias)");
       if(streak >= 14) badges.push("🏅 Fortalecimento (14 dias)");
       if(streak >= 30) badges.push("🏆 Reprograma 30 (30 dias)");
-
-      alert(badges.length
-        ? "Badges desbloqueados:\n\n" + badges.join("\n")
-        : "Nenhum badge ainda. Faça 3 dias seguidos sem cair para desbloquear o primeiro.");
+      alert(badges.length ? "Badges desbloqueados:\n\n" + badges.join("\n") : "Nenhum badge ainda. Faça 3 dias seguidos sem cair para desbloquear o primeiro.");
     });
 
     function downloadText(filename, content){
-      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const blob = new Blob([content], {type:"text/plain;charset=utf-8"});
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
+      a.href = url; a.download = filename;
       document.body.appendChild(a);
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
     }
 
-    $("btnCert").addEventListener("click", () => {
+    $("btnCert").addEventListener("click", ()=>{
       const arr = loadCheckins();
       const streak = getStreak(arr);
-
       if(streak < 7){
         alert("Para gerar o certificado, desbloqueie 7 dias seguidos sem cair.");
         return;
       }
-
       const name = prompt("Nome/apelido para o certificado:", "Anônimo") || "Anônimo";
       const d = DATA[currentV] || DATA.apostas;
-
       const txt = `CERTIFICADO — REPROGRAMA 30
 
 Certificamos que ${name}
@@ -1682,9 +1591,9 @@ concluiu um marco de consistência na trilha ${d.pill.replace("Trilha • ","")}
 alcançando ${streak} dias de progresso registrado.
 
 Mensagem:
-“Você não venceu para sempre.
+"Você não venceu para sempre.
 Você venceu hoje.
-E isso, repetido, muda uma vida.”
+E isso, repetido, muda uma vida."
 
 Reprograma 30
 Suporte educacional/comportamental
@@ -1693,27 +1602,18 @@ Suporte educacional/comportamental
       toast("Certificado baixado.");
     });
 
-    $("btnReport").addEventListener("click", () => {
+    $("btnReport").addEventListener("click", ()=>{
       const arr = loadCheckins();
       if(!arr.length){
         alert("Faça pelo menos 1 check-in para gerar relatório.");
         return;
       }
-
       const last30 = arr.slice(-30);
-      const avgUrge = (last30.reduce((s, x) => s + (x.urge || 0), 0) / last30.length).toFixed(2);
-
-      const trigMap = {};
-      last30.forEach(x => {
-        trigMap[x.trigger] = (trigMap[x.trigger] || 0) + 1;
-      });
-
-      const topTrig = Object.entries(trigMap)
-        .sort((a,b) => b[1]-a[1])
-        .slice(0,3)
-        .map(([k,v]) => `- ${k}: ${v}`)
-        .join("\n") || "- —";
-
+      const avgUrge = (last30.reduce((s,x)=> s + (x.urge || 0), 0)/last30.length).toFixed(2);
+      const trig = {};
+      last30.forEach(x => trig[x.trigger] = (trig[x.trigger] || 0) + 1);
+      const top = Object.entries(trig).sort((a,b)=> b[1]-a[1]).slice(0,3)
+        .map(([k,v])=> `- ${k}: ${v}`).join("\n") || "- —";
       const d = DATA[currentV] || DATA.apostas;
       const streak = getStreak(arr);
 
@@ -1728,7 +1628,7 @@ Resumo
 - Vontade média (0–5): ${avgUrge}
 
 Gatilhos mais frequentes
-${topTrig}
+${top}
 
 Observação
 Este relatório é um apoio de acompanhamento pessoal e não substitui avaliação profissional.
@@ -1737,26 +1637,23 @@ Este relatório é um apoio de acompanhamento pessoal e não substitui avaliaç�
       toast("Relatório baixado.");
     });
 
-    // Rotas hash
+    // Routing
     function initRoute(){
       const h = (location.hash || "").replace("#","").trim().toLowerCase();
-      if(h && DATA[h]){
-        showTrilha(h, false);
-      }else{
+      if(h && DATA[h]) showTrilha(h, false);
+      else {
         viewHome.classList.remove("hidden");
         viewTrilha.classList.add("hidden");
         navLinksHome.classList.remove("hidden");
         navLinksTrilha.classList.add("hidden");
         history.replaceState({view:"home"}, "", "#");
+        updateBottomCTA();
       }
     }
 
-    window.addEventListener("popstate", (e) => {
-      if(e.state?.view === "trilha" && e.state?.v){
-        showTrilha(e.state.v, false);
-      }else{
-        showHome(false);
-      }
+    window.addEventListener("popstate", (e)=>{
+      if(e.state?.view === "trilha" && e.state?.v) showTrilha(e.state.v, false);
+      else showHome(false);
     });
 
     initRoute();
