@@ -10,8 +10,10 @@
   <style>
     :root{
       --bg:#0b0f1a;
-      --panel:rgba(255,255,255,.03);
+      --panel:rgba(255,255,255,.035);
+      --panel2:rgba(255,255,255,.025);
       --line:rgba(255,255,255,.10);
+      --line2:rgba(255,255,255,.14);
       --text:#eef2fb;
       --muted:#a9b2c3;
       --accent:#7c5cff;
@@ -20,6 +22,7 @@
       --warn:#ffcc66;
       --bad:#ff5c7a;
       --shadow: 0 18px 60px rgba(0,0,0,.46);
+      --shadow2: 0 26px 90px rgba(0,0,0,.62);
       --r:18px;
       --r2:26px;
       --max:1120px;
@@ -37,6 +40,14 @@
     }
     a{color:inherit;text-decoration:none}
     .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
+    .hidden{display:none!important}
+
+    /* focus */
+    :focus-visible{
+      outline: 2px solid rgba(41,211,255,.55);
+      outline-offset: 3px;
+      border-radius: 14px;
+    }
 
     /* NAV */
     .nav{
@@ -46,59 +57,71 @@
       border-bottom: 1px solid var(--line);
     }
     .nav-in{height:var(--navH);display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{display:flex;align-items:center;gap:10px;cursor:pointer;min-width:220px}
+    .brand{display:flex;align-items:center;gap:10px;cursor:pointer;min-width:240px}
     .logo{
       width:38px;height:38px;border-radius:12px;
       background: linear-gradient(135deg,var(--accent),var(--accent2));
-      box-shadow: 0 12px 35px rgba(124,92,255,.25);
+      box-shadow: 0 12px 35px rgba(124,92,255,.22);
       flex:0 0 auto;
     }
-    .brand .t{font-weight:900;letter-spacing:.2px;line-height:1.1}
+    .brand .t{font-weight:950;letter-spacing:.2px;line-height:1.1}
     .brand .s{font-size:12px;color:var(--muted);margin-top:2px}
     .links{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
     .links a{
       font-size:13px;color:var(--muted);
       padding:8px 10px;border-radius:999px;
       border:1px solid transparent;
+      transition:.16s ease;
     }
     .links a:hover{color:var(--text);border-color:var(--line);background:rgba(255,255,255,.03)}
     .rightbar{display:flex;gap:10px;align-items:center}
 
+    /* Buttons */
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
       padding:12px 14px;border-radius:999px;border:1px solid transparent;
-      font-weight:900;font-size:14px;cursor:pointer;
+      font-weight:950;font-size:14px;cursor:pointer;
       transition:.16s transform ease,.16s background ease,.16s border-color ease,.16s opacity ease;
       user-select:none;
       background: transparent;
       color: inherit;
+      white-space: nowrap;
     }
     .btn:hover{transform: translateY(-1px)}
     .btn:active{transform: translateY(0)}
     .btn-primary{
       background: linear-gradient(135deg,var(--accent),var(--accent2));
       color:#07111f;
-      box-shadow: 0 14px 40px rgba(124,92,255,.25);
+      box-shadow: 0 14px 40px rgba(124,92,255,.22);
     }
     .btn-ghost{background: rgba(255,255,255,.03);border-color: var(--line);color: var(--text)}
     .btn-soft{background: rgba(255,255,255,.06);border-color: rgba(255,255,255,.10);color: var(--text)}
     .btn-small{padding:10px 12px;font-size:13px}
     .btn-wide{width:100%}
 
+    /* HERO */
     header{padding:54px 0 18px}
     .hero{
       position:relative;overflow:hidden;
       border-radius: var(--r2);
       border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
       padding:28px;
     }
     .hero:before{
       content:"";
       position:absolute; inset:-160px -160px auto auto;
-      width:320px;height:320px;border-radius:50%;
-      background: radial-gradient(circle, rgba(124,92,255,.32), transparent 60%);
+      width:340px;height:340px;border-radius:50%;
+      background: radial-gradient(circle, rgba(124,92,255,.35), transparent 60%);
+      filter: blur(2px);
+      pointer-events:none;
+    }
+    .hero:after{
+      content:"";
+      position:absolute; inset:auto auto -220px -240px;
+      width:420px;height:420px;border-radius:50%;
+      background: radial-gradient(circle, rgba(41,211,255,.22), transparent 60%);
       filter: blur(2px);
       pointer-events:none;
     }
@@ -110,44 +133,66 @@
       padding:6px 10px;border-radius:999px;
       background: rgba(255,255,255,.02);
     }
-    h1{margin:0 0 10px;font-size:40px;line-height:1.06;letter-spacing:-.7px}
-    .sub{margin:0;color:var(--muted);font-size:16px;line-height:1.65;max-width:78ch}
+    h1{margin:0 0 10px;font-size:40px;line-height:1.06;letter-spacing:-.9px}
+    .sub{margin:0;color:var(--muted);font-size:16px;line-height:1.65;max-width:82ch}
     .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-
-    section{padding:28px 0}
-    .title{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}
-    .title h2{margin:0;font-size:22px;letter-spacing:-.2px}
-    .title p{margin:0;color:var(--muted);font-size:13px;max-width:75ch;line-height:1.55}
-
-    .grid{display:grid;gap:12px}
-    .grid2{grid-template-columns: repeat(2,1fr)}
-    .grid3{grid-template-columns: repeat(3,1fr)}
-
-    .card{
-      background: rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius: var(--r);
-      padding:16px;
-    }
-    .card h3{margin:0 0 8px;font-size:15px}
-    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
     .divider{height:1px;background:var(--line);margin:12px 0}
     .small{font-size:12px;color:var(--muted);line-height:1.65}
     .danger{color:#ffd6dd}
     .muted{color:var(--muted)}
 
+    /* Sections */
+    section{padding:28px 0}
+    .title{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .title h2{margin:0;font-size:22px;letter-spacing:-.3px}
+    .title p{margin:0;color:var(--muted);font-size:13px;max-width:78ch;line-height:1.55}
+
+    .grid{display:grid;gap:12px}
+    .grid2{grid-template-columns: repeat(2,1fr)}
+    .grid3{grid-template-columns: repeat(3,1fr)}
+
+    /* Cards */
+    .card{
+      background: var(--panel);
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      padding:16px;
+    }
+    .card.soft{background: var(--panel2)}
+    .card h3{margin:0 0 8px;font-size:15px}
+    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+
+    .statbar{
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+    .stat{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.14);
+      border-radius: 18px;
+      padding:12px;
+      min-height: 74px;
+      display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .stat b{font-size:18px;letter-spacing:-.2px}
+    .stat span{font-size:12px;color:var(--muted);line-height:1.35}
+
+    /* Identify (choices) */
     .choice{
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
       cursor:pointer;
       transition:.16s transform ease,.16s border-color ease,.16s background ease;
+      will-change: transform;
     }
-    .choice:hover{transform:translateY(-1px);border-color:rgba(41,211,255,.35);background:rgba(255,255,255,.04)}
+    .choice:hover{transform:translateY(-2px);border-color:rgba(41,211,255,.35);background:rgba(255,255,255,.045)}
     .choice .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
     .badge{
       font-size:11px;
       padding:6px 10px;border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(0,0,0,.15);
+      background: rgba(0,0,0,.14);
       color: var(--muted);
       white-space:nowrap;
       display:inline-block;
@@ -158,10 +203,11 @@
     .badge.warn{border-color:rgba(255,204,102,.35);background:rgba(255,204,102,.10);color:#ffe6b7}
     .badge.bad{border-color:rgba(255,92,122,.35);background:rgba(255,92,122,.10);color:#ffd2db}
 
+    /* Pricing */
     .pricing{display:grid;grid-template-columns: 1fr 1fr;gap:12px}
     .price.best{border-color: rgba(41,211,255,.35);box-shadow: 0 18px 60px rgba(41,211,255,.12)}
-    .money{font-size:34px;font-weight:1000;letter-spacing:-.6px;margin:8px 0 2px}
-    .money small{font-size:13px;color:var(--muted);font-weight:700}
+    .money{font-size:34px;font-weight:1000;letter-spacing:-.7px;margin:8px 0 2px}
+    .money small{font-size:13px;color:var(--muted);font-weight:800}
     ul.features{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px}
     ul.features li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:13px;line-height:1.45}
     .check{
@@ -175,6 +221,7 @@
       margin-top:1px;
     }
 
+    /* Toast */
     .toast{
       position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
       background: rgba(0,0,0,.65);
@@ -187,8 +234,7 @@
       backdrop-filter: blur(10px);
     }
 
-    .hidden{display:none!important}
-
+    /* Check-in layout */
     .two-col{display:grid;grid-template-columns: 1.2fr .8fr;gap:12px;align-items:start}
     .kpi{
       display:flex;justify-content:space-between;gap:10px;
@@ -200,9 +246,22 @@
     .progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:8px}
     .progress > div{height:100%;width:0%;background: linear-gradient(90deg,var(--accent),var(--accent2))}
 
+    select{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      font-weight: 900;
+      outline:none;
+    }
+    select option{ color:#0b0f1a; }
+    input[type="range"]{ width:100%; }
+
     footer{padding:26px 0 40px;border-top:1px solid var(--line);margin-top:18px}
 
-    /* ====== FAQ premium (corrige o "bug" do grid) ====== */
+    /* ===== FAQ premium (sem bug de grid) ===== */
     .faq{
       display:grid;
       gap:10px;
@@ -249,7 +308,7 @@
       margin-top: -4px;
     }
 
-    /* ====== Modal profissional (Modo Crise) ====== */
+    /* ===== Modal Crise ===== */
     .modal-backdrop{
       position:fixed; inset:0;
       background: rgba(0,0,0,.55);
@@ -265,7 +324,7 @@
       border-radius: 26px;
       border:1px solid var(--line);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: 0 26px 90px rgba(0,0,0,.62);
+      box-shadow: var(--shadow2);
       overflow:hidden;
       display:none;
       z-index: 1000;
@@ -311,55 +370,29 @@
       border:1px solid rgba(255,255,255,.12);
       box-shadow: 0 20px 60px rgba(41,211,255,.10);
       transform: scale(1);
+      flex:0 0 auto;
     }
-    .bubble.breathing{
-      animation: breathe 6s ease-in-out infinite;
-    }
+    .bubble.breathing{ animation: breathe 6s ease-in-out infinite; }
     @keyframes breathe{
       0%{transform:scale(0.92)}
       50%{transform:scale(1.06)}
       100%{transform:scale(0.92)}
     }
-    .timer{
-      display:flex; flex-direction:column; gap:6px;
-    }
+    .timer{display:flex; flex-direction:column; gap:6px}
     .timer b{font-size:20px}
     .timer span{font-size:12px;color:var(--muted)}
-
-    .modal-actions{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:12px;
-    }
-    .note{
-      margin-top:12px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    /* select styling (tirando "cara de botão") */
-    select{
-      width:100%;
-      padding:12px 12px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-      font-weight: 900;
-      outline:none;
-    }
-    select option{ color:#0b0f1a; }
-
-    input[type="range"]{ width:100%; }
+    .modal-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+    .note{margin-top:12px;color: var(--muted);font-size: 12px;line-height: 1.6;}
 
     @media (max-width:980px){
-      .grid3{grid-template-columns:1fr}
-      .grid2{grid-template-columns:1fr}
+      .grid3,.grid2{grid-template-columns:1fr}
       .pricing{grid-template-columns:1fr}
       .links{display:none}
       h1{font-size:34px}
       .two-col{grid-template-columns:1fr}
       .modal-grid{grid-template-columns:1fr}
+      .statbar{grid-template-columns:1fr}
+      .brand{min-width:auto}
     }
   </style>
 </head>
@@ -368,7 +401,7 @@
   <!-- NAV -->
   <div class="nav">
     <div class="wrap nav-in">
-      <div class="brand" id="goHome">
+      <div class="brand" id="goHome" title="Voltar para o início">
         <div class="logo" aria-hidden="true"></div>
         <div>
           <div class="t">Reprograma 30</div>
@@ -378,6 +411,7 @@
 
       <div class="links" id="navLinksHome">
         <a href="#metodo">O método</a>
+        <a href="#entrega">O que você recebe</a>
         <a href="#identificar">Me identificar</a>
         <a href="#planos">Assinar</a>
         <a href="#faq">FAQ</a>
@@ -403,26 +437,43 @@
         <div class="hero">
           <div class="kicker">
             <span class="dot" aria-hidden="true"></span>
-            <span class="pill">Sem julgamento • Privacidade • Um dia por vez</span>
+            <span class="pill">Sem julgamento • Privacidade</span>
+            <span class="pill">Um dia por vez</span>
             <span class="pill">Apostas • Álcool • Fumar • Pornografia • Drogas</span>
           </div>
 
-          <h1>Você não é fraco. Você está preso num ciclo.</h1>
+          <h1>Não é falta de caráter. É um ciclo que dá pra quebrar.</h1>
+
           <p class="sub">
-            O <b>Reprograma 30</b> é um <b>Método Anti-Vício</b> (educacional e comportamental) para recuperar o controle.
-            Ele funciona porque troca “força de vontade” por <b>estrutura diária</b>, <b>interrupção do impulso</b> e
-            <b>progresso visível</b>.
+            O <b>Reprograma 30</b> é um método prático (educacional e comportamental) para recuperar controle.
+            Em vez de “força de vontade”, você usa <b>estrutura</b>: passos curtos, check-ins e um <b>Modo Crise</b> quando a vontade bate.
           </p>
 
+          <div class="statbar" aria-label="Resultados práticos">
+            <div class="stat">
+              <b>8–12 min/dia</b>
+              <span>pra criar consistência sem “maratona”</span>
+            </div>
+            <div class="stat">
+              <b>Progresso visível</b>
+              <span>streak, badges e relatório local</span>
+            </div>
+            <div class="stat">
+              <b>Modo crise</b>
+              <span>pra atravessar o impulso em minutos</span>
+            </div>
+          </div>
+
           <div class="row">
-            <button class="btn btn-primary" id="btnStartIdentify" type="button">Quero me identificar e começar</button>
+            <button class="btn btn-primary" id="btnStartIdentify" type="button">Me identificar e começar</button>
             <a class="btn btn-ghost" href="#metodo">Entender o método</a>
+            <button class="btn btn-soft" id="btnCrisisHero" type="button">Abrir modo crise</button>
           </div>
 
           <div class="divider"></div>
           <p class="small danger">
             Aviso: suporte educacional/comportamental. Não substitui terapia/psiquiatria/tratamento médico.
-            Em risco de segurança, procure ajuda profissional imediatamente.
+            Se houver risco imediato, procure ajuda profissional (CVV 188 / urgência 192).
           </p>
         </div>
       </div>
@@ -431,33 +482,79 @@
     <section id="metodo">
       <div class="wrap">
         <div class="title">
-          <h2>O que é o Método Anti-Vício</h2>
-          <p>Um sistema simples para vencer o impulso no momento certo e construir consistência no dia a dia.</p>
+          <h2>Como funciona (na prática)</h2>
+          <p>Sem misticismo: você reduz gatilhos, atravessa a vontade e substitui o hábito — com um plano diário.</p>
         </div>
 
         <div class="grid grid3">
           <div class="card">
-            <h3>1) Consciência</h3>
-            <p>Você entende seu padrão (gatilhos, horários, emoções) e tira o vício do automático.</p>
+            <h3>1) Diagnóstico simples</h3>
+            <p>Você identifica <b>gatilhos</b> (horário, emoção, lugar) e o padrão deixa de ser automático.</p>
           </div>
           <div class="card">
-            <h3>2) Interrupção</h3>
-            <p>Bloqueios + regras simples + Modo Crise para vencer a vontade no momento crítico.</p>
+            <h3>2) Barreira + ação</h3>
+            <p>Você cria barreiras práticas e usa o <b>Modo Crise</b> para reduzir urgência no momento real.</p>
           </div>
           <div class="card">
-            <h3>3) Reconstrução</h3>
-            <p>Você substitui o hábito e cria rotina. O cérebro aprende dopamina saudável.</p>
+            <h3>3) Substituição</h3>
+            <p>Você troca “dopamina fácil” por rotina que entrega energia, sono e foco — sem extremos.</p>
           </div>
         </div>
 
         <div class="grid grid2" style="margin-top:12px">
-          <div class="card">
-            <h3>4) Progresso visível</h3>
-            <p>Check-ins + marcos (badges) + certificado e relatório. Isso mantém a pessoa no processo.</p>
+          <div class="card soft">
+            <h3>Progresso que dá vontade de continuar</h3>
+            <p>Check-ins + streak + badges + relatório e certificado local. Você enxerga melhora.</p>
           </div>
+          <div class="card soft">
+            <h3>Sem exposição</h3>
+            <p>O check-in salva no seu navegador. Privacidade e praticidade.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="entrega">
+      <div class="wrap">
+        <div class="title">
+          <h2>O que você recebe</h2>
+          <p>O objetivo é simples: te dar estrutura pronta para aplicar, sem depender de motivação perfeita.</p>
+        </div>
+
+        <div class="grid grid3">
           <div class="card">
-            <h3>Por que as pessoas pagam por isso?</h3>
-            <p>Porque não é só informação — é <b>estrutura</b>. Quando a força de vontade falha, o método continua.</p>
+            <h3>Trilhas por vício</h3>
+            <p>Conteúdo e gatilhos específicos para cada caso (apostas, álcool, fumar, pornografia, drogas).</p>
+            <div class="divider"></div>
+            <span class="badge warn">personalizado</span>
+            <span class="badge warn">direto ao ponto</span>
+          </div>
+
+          <div class="card">
+            <h3>Modo Crise (pronto)</h3>
+            <p>Respiração guiada + ações rápidas para atravessar a vontade e voltar ao controle.</p>
+            <div class="divider"></div>
+            <span class="badge bad">anti-impulso</span>
+            <span class="badge good">2 minutos</span>
+          </div>
+
+          <div class="card">
+            <h3>Check-ins + Recompensas</h3>
+            <p>Streak, badges, certificado e relatório gerados no navegador (zero custo de servidor).</p>
+            <div class="divider"></div>
+            <span class="badge good">progresso</span>
+            <span class="badge warn">consistência</span>
+          </div>
+        </div>
+
+        <div class="grid grid2" style="margin-top:12px">
+          <div class="card soft">
+            <h3>Resultados esperados (sem promessas mágicas)</h3>
+            <p>Em 7 dias você tende a reduzir gatilhos e recuperar controle do “momento crítico”. Em 30, rotina. Em 90, consolidação.</p>
+          </div>
+          <div class="card soft">
+            <h3>Importante</h3>
+            <p>Casos graves precisam de acompanhamento profissional junto. O método é suporte educacional/comportamental.</p>
           </div>
         </div>
       </div>
@@ -467,7 +564,7 @@
       <div class="wrap">
         <div class="title">
           <h2>Se identifique agora</h2>
-          <p>Clique no que mais parece com você. Você vai para uma trilha personalizada e já começa com o Dia 1.</p>
+          <p>Clique no que mais parece com você. Você vai para uma trilha personalizada e começa pelo Dia 1.</p>
         </div>
 
         <div class="grid grid3">
@@ -529,7 +626,7 @@
 
           <div class="card">
             <h3>Não sabe qual?</h3>
-            <p>Comece pelo que mais te destrói hoje. Depois você pode trocar de trilha.</p>
+            <p>Comece pelo que mais te derruba hoje. Depois você pode trocar de trilha.</p>
             <div class="row" style="margin-top:12px">
               <button class="btn btn-primary btn-wide" id="btnStartAny" type="button">Começar agora</button>
             </div>
@@ -575,12 +672,12 @@
       </div>
     </section>
 
-    <!-- FAQ (PROFISSIONAL) -->
+    <!-- FAQ -->
     <section id="faq">
       <div class="wrap">
         <div class="title">
           <h2>FAQ</h2>
-          <p>Perguntas rápidas para reduzir dúvidas e aumentar conversão.</p>
+          <p>Respostas diretas. Sem enrolação.</p>
         </div>
 
         <div class="faq" id="faqAccordion">
@@ -597,7 +694,7 @@
             <span class="faq-ico" aria-hidden="true">+</span>
           </button>
           <div class="faq-a" hidden>
-            Não. O método inclui plano de retomada para voltar sem cair no ciclo culpa → repetição.
+            Não. Você usa o plano de retomada: interrompe culpa → repetição e volta no dia seguinte.
           </div>
 
           <button class="faq-item" aria-expanded="false" type="button">
@@ -613,7 +710,7 @@
             <span class="faq-ico" aria-hidden="true">+</span>
           </button>
           <div class="faq-a" hidden>
-            Sim. Você começa pelo que mais te derruba hoje e pode ajustar depois.
+            Sim. Você pode começar no que mais dói hoje e mudar depois.
           </div>
         </div>
       </div>
@@ -647,7 +744,7 @@
 
           <div class="row">
             <button class="btn btn-primary" id="btnDay1" type="button">Começar Dia 1</button>
-            <button class="btn btn-ghost" id="btnCrisisHero" type="button">Modo crise</button>
+            <button class="btn btn-ghost" id="btnCrisisTrilha" type="button">Modo crise</button>
             <a class="btn btn-soft" href="#planos" id="btnGoPlans">Assinar para liberar tudo</a>
           </div>
 
@@ -683,7 +780,7 @@
           </div>
         </div>
 
-        <div class="card" style="margin-top:12px">
+        <div class="card soft" style="margin-top:12px">
           <h3>O que muda em 7 dias</h3>
           <p class="muted" id="in7">…</p>
           <div class="divider"></div>
@@ -746,13 +843,13 @@
             </div>
           </div>
 
-          <div class="card">
+          <div class="card soft">
             <h3>Recompensas (zero custo)</h3>
             <p class="muted">Progresso visível mantém você no processo.</p>
             <div class="divider"></div>
             <p class="muted" id="rewardText">Faça 7 dias seguidos sem cair e desbloqueie certificado + badge.</p>
-            <div class="divider"></div>
 
+            <div class="divider"></div>
             <h3>Próximo passo</h3>
             <p class="muted">Se quiser o conteúdo completo 30 dias + continuidade 90 dias, assine abaixo.</p>
             <div class="row" style="margin-top:12px">
@@ -762,7 +859,7 @@
 
             <div class="divider"></div>
             <p class="small muted">
-              Dica: divulgue o link da trilha certa (ex.: “Apostas”). Isso aumenta conversão porque fala direto com a dor.
+              Dica: divulgue o link direto da trilha (ex.: <b>#apostas</b>). Isso aumenta conversão porque fala direto com a dor.
             </p>
           </div>
         </div>
@@ -869,7 +966,7 @@
           <div class="divider"></div>
 
           <p class="note">
-            Se você estiver sem controle ou em risco de se machucar: CVV <b>188</b> (24h) e urgência médica <b>192</b>.
+            Se você estiver sem controle ou em risco de se machucar: CVV <b>188</b> (24h) e urgência <b>192</b>.
             O Reprograma 30 é apoio educacional/comportamental e não substitui atendimento profissional.
           </p>
         </div>
@@ -878,7 +975,7 @@
   </div>
 
   <script>
-    // --- helpers
+    // helpers
     const $ = (id) => document.getElementById(id);
     const toast = (msg) => {
       const el = $("toast");
@@ -890,7 +987,7 @@
     $("yearHome").textContent = new Date().getFullYear();
     $("yearTrilha").textContent = new Date().getFullYear();
 
-    // --- SPA views
+    // views
     const viewHome = $("viewHome");
     const viewTrilha = $("viewTrilha");
     const navLinksHome = $("navLinksHome");
@@ -930,11 +1027,10 @@
       if(!viewHome.classList.contains("hidden")) document.getElementById("identificar").scrollIntoView({behavior:"smooth", block:"start"});
       else document.getElementById("planos").scrollIntoView({behavior:"smooth", block:"start"});
     });
-
     $("btnStartIdentify").addEventListener("click", () => document.getElementById("identificar").scrollIntoView({behavior:"smooth", block:"start"}));
     $("btnStartAny").addEventListener("click", () => showTrilha("apostas"));
 
-    // --- Content per addiction
+    // content per addiction
     const DATA = {
       apostas:{
         pill:"Trilha • Apostas",
@@ -1038,9 +1134,7 @@
 
     // --- Check-in per addiction
     function key(){ return "rp30_checkins_" + currentV; }
-    function load(){
-      try { return JSON.parse(localStorage.getItem(key()) || "[]"); } catch { return []; }
-    }
+    function load(){ try { return JSON.parse(localStorage.getItem(key()) || "[]"); } catch { return []; } }
     function save(arr){ localStorage.setItem(key(), JSON.stringify(arr)); }
     function fmtDate(d){ return new Date(d).toLocaleDateString("pt-BR"); }
 
@@ -1131,7 +1225,7 @@ atingiu ${streak} dias de consistência.
 E isso, repetido, muda uma vida."
 
 (Reprograma 30 — apoio educacional/comportamental)`;
-      downloadText(\`certificado-\${currentV}-\${name}.txt\`, txt);
+      downloadText(`certificado-${currentV}-${name}.txt`, txt);
       toast("Certificado baixado.");
     });
 
@@ -1143,7 +1237,7 @@ E isso, repetido, muda uma vida."
       const trigCount = {};
       last.forEach(x=> trigCount[x.trigger]=(trigCount[x.trigger]||0)+1);
       const topTrig = Object.entries(trigCount).sort((a,b)=>b[1]-a[1]).slice(0,3)
-        .map(([k,v])=>\`- \${k}: \${v}\`).join("\n");
+        .map(([k,v])=>`- ${k}: ${v}`).join("\n");
 
       const d = DATA[currentV] || DATA.apostas;
       const streak = getStreak(arr);
@@ -1161,30 +1255,26 @@ Top gatilhos:
 ${topTrig || "- —"}
 
 Obs.: apoio educacional/comportamental. Não substitui acompanhamento profissional.`;
-      downloadText(\`relatorio-\${currentV}.txt\`, txt);
+      downloadText(`relatorio-${currentV}.txt`, txt);
       toast("Relatório baixado.");
     });
 
-    // ===== FAQ accordion (profissional) =====
+    // FAQ accordion
     (function initFAQ(){
       const root = document.getElementById("faqAccordion");
       if(!root) return;
       const items = [...root.querySelectorAll(".faq-item")];
 
       items.forEach((btn) => {
-        const panel = btn.nextElementSibling; // .faq-a
+        const panel = btn.nextElementSibling;
         btn.addEventListener("click", () => {
           const open = btn.getAttribute("aria-expanded") === "true";
-
-          // fecha todos
           items.forEach(b => {
             b.setAttribute("aria-expanded", "false");
             b.querySelector(".faq-ico").textContent = "+";
             const p = b.nextElementSibling;
             if(p) p.hidden = true;
           });
-
-          // abre o clicado se estava fechado
           if(!open){
             btn.setAttribute("aria-expanded", "true");
             btn.querySelector(".faq-ico").textContent = "–";
@@ -1194,7 +1284,7 @@ Obs.: apoio educacional/comportamental. Não substitui acompanhamento profission
       });
     })();
 
-    // ===== Modo Crise (modal) =====
+    // Modo crise (modal)
     const crisisBackdrop = $("crisisBackdrop");
     const crisisModal = $("crisisModal");
     const crisisClose = $("crisisClose");
@@ -1215,6 +1305,7 @@ Obs.: apoio educacional/comportamental. Não substitui acompanhamento profission
 
     $("btnCrisisTop").addEventListener("click", openCrisis);
     $("btnCrisisHero").addEventListener("click", openCrisis);
+    $("btnCrisisTrilha").addEventListener("click", openCrisis);
 
     crisisBackdrop.addEventListener("click", closeCrisis);
     crisisClose.addEventListener("click", closeCrisis);
@@ -1256,23 +1347,16 @@ Obs.: apoio educacional/comportamental. Não substitui acompanhamento profission
     $("btnBreathStart").addEventListener("click", startBreathing);
     $("btnBreathStop").addEventListener("click", stopBreathing);
 
-    // Ações rápidas
-    $("btnActionWater").addEventListener("click", ()=>{
-      toast("Beba água agora. Depois volte pro check-in.");
-    });
-    $("btnActionMove").addEventListener("click", ()=>{
-      toast("20–60s de movimento. O corpo muda o estado.");
-    });
-    $("btnActionBlock").addEventListener("click", ()=>{
-      toast("Corte o gatilho: feche apps, saia do ambiente, deixe o celular longe.");
-    });
+    $("btnActionWater").addEventListener("click", ()=> toast("Beba água agora. Depois volte pro check-in."));
+    $("btnActionMove").addEventListener("click", ()=> toast("20–60s de movimento. O corpo muda o estado."));
+    $("btnActionBlock").addEventListener("click", ()=> toast("Corte o gatilho: feche apps, saia do ambiente, deixe o celular longe."));
     $("btnActionCheckin").addEventListener("click", ()=>{
       closeCrisis();
       const el = document.getElementById("checkin");
       if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
     });
 
-    // routing on load (hash)
+    // routing
     function initRoute(){
       const h = (location.hash || "").replace("#","").trim().toLowerCase();
       if(h && DATA[h]) showTrilha(h);
@@ -1282,7 +1366,9 @@ Obs.: apoio educacional/comportamental. Não substitui acompanhamento profission
       if(e.state && e.state.view === "trilha" && e.state.v) showTrilha(e.state.v);
       else showHome();
     });
+
     initRoute();
+    updateUI();
   </script>
 </body>
 </html>
