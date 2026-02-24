@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reprograma 30 — Método Anti-Vício</title>
+  <meta name="description" content="Reprograma 30: método anti-vício com trilhas para apostas, álcool, fumar, pornografia e drogas. Check-in, botão de crise e recompensas."/>
+  <meta name="theme-color" content="#0b0f1a"/>
+
+  <style>
+    :root{
+      --bg:#0b0f1a;
+      --panel:rgba(255,255,255,.03);
+      --line:rgba(255,255,255,.10);
+      --text:#eef2fb;
+      --muted:#a9b2c3;
+      --accent:#7c5cff;
+      --accent2:#29d3ff;
+      --good:#35d07f;
+      --warn:#ffcc66;
+      --bad:#ff5c7a;
+      --shadow: 0 18px 60px rgba(0,0,0,.46);
+      --r:18px;
+      --r2:26px;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;padding:0;color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1100px 750px at 12% 0%, rgba(124,92,255,.22), transparent 58%),
+        radial-gradient(900px 650px at 92% 14%, rgba(41,211,255,.16), transparent 58%),
+        var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,26,.72);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background: linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow: 0 12px 35px rgba(124,92,255,.25);
+      flex:0 0 auto;
+    }
+    .brand .t{font-weight:900;letter-spacing:.2px;line-height:1.1}
+    .brand .s{font-size:12px;color:var(--muted);margin-top:2px}
+    .links{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .links a{
+      font-size:13px;color:var(--muted);
+      padding:8px 10px;border-radius:999px;
+      border:1px solid transparent;
+    }
+    .links a:hover{color:var(--text);border-color:var(--line);background:rgba(255,255,255,.03)}
+    .rightbar{display:flex;gap:10px;align-items:center}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 14px;border-radius:999px;border:1px solid transparent;
+      font-weight:900;font-size:14px;cursor:pointer;
+      transition:.16s transform ease,.16s background ease,.16s border-color ease,.16s opacity ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn:active{transform: translateY(0)}
+    .btn-primary{
+      background: linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#07111f;
+      box-shadow: 0 14px 40px rgba(124,92,255,.25);
+    }
+    .btn-ghost{background: rgba(255,255,255,.03);border-color: var(--line);color: var(--text)}
+    .btn-soft{background: rgba(255,255,255,.06);border-color: rgba(255,255,255,.10);color: var(--text)}
+    .btn-small{padding:10px 12px;font-size:13px}
+    .btn-wide{width:100%}
+
+    header{padding:54px 0 18px}
+    .hero{
+      position:relative;overflow:hidden;
+      border-radius: var(--r2);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      padding:28px;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-160px -160px auto auto;
+      width:320px;height:320px;border-radius:50%;
+      background: radial-gradient(circle, rgba(124,92,255,.32), transparent 60%);
+      filter: blur(2px);
+      pointer-events:none;
+    }
+    .kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px rgba(53,208,127,.12)}
+    .pill{
+      font-size:12px;color:var(--muted);
+      border:1px solid var(--line);
+      padding:6px 10px;border-radius:999px;
+      background: rgba(255,255,255,.02);
+    }
+    h1{margin:0 0 10px;font-size:40px;line-height:1.06;letter-spacing:-.7px}
+    .sub{margin:0;color:var(--muted);font-size:16px;line-height:1.65;max-width:78ch}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+    section{padding:28px 0}
+    .title{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .title h2{margin:0;font-size:22px;letter-spacing:-.2px}
+    .title p{margin:0;color:var(--muted);font-size:13px;max-width:75ch;line-height:1.55}
+
+    .grid{display:grid;gap:12px}
+    .grid2{grid-template-columns: repeat(2,1fr)}
+    .grid3{grid-template-columns: repeat(3,1fr)}
+
+    .card{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      padding:16px;
+    }
+    .card h3{margin:0 0 8px;font-size:15px}
+    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+    .divider{height:1px;background:var(--line);margin:12px 0}
+    .small{font-size:12px;color:var(--muted);line-height:1.65}
+    .danger{color:#ffd6dd}
+    .muted{color:var(--muted)}
+
+    .choice{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+      cursor:pointer;
+      transition:.16s transform ease,.16s border-color ease,.16s background ease;
+    }
+    .choice:hover{transform:translateY(-1px);border-color:rgba(41,211,255,.35);background:rgba(255,255,255,.04)}
+    .choice .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .badge{
+      font-size:11px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.15);
+      color: var(--muted);
+      white-space:nowrap;
+      display:inline-block;
+      margin-right:6px;
+      margin-top:6px;
+    }
+    .badge.good{border-color:rgba(53,208,127,.35);background:rgba(53,208,127,.12);color:#bdf6d6}
+    .badge.warn{border-color:rgba(255,204,102,.35);background:rgba(255,204,102,.10);color:#ffe6b7}
+    .badge.bad{border-color:rgba(255,92,122,.35);background:rgba(255,92,122,.10);color:#ffd2db}
+
+    .pricing{display:grid;grid-template-columns: 1fr 1fr;gap:12px}
+    .price.best{border-color: rgba(41,211,255,.35);box-shadow: 0 18px 60px rgba(41,211,255,.12)}
+    .money{font-size:34px;font-weight:1000;letter-spacing:-.6px;margin:8px 0 2px}
+    .money small{font-size:13px;color:var(--muted);font-weight:700}
+    ul.features{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+    ul.features li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:13px;line-height:1.45}
+    .check{
+      width:18px;height:18px;border-radius:7px;
+      display:flex;align-items:center;justify-content:center;
+      background: rgba(53,208,127,.14);
+      border:1px solid rgba(53,208,127,.28);
+      color: var(--good);
+      font-weight:1000;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    details{background: rgba(255,255,255,.03);border:1px solid var(--line);border-radius: var(--r);padding:14px}
+    details summary{cursor:pointer;font-weight:900}
+    details p{color:var(--muted);font-size:13px;line-height:1.62;margin:10px 0 0}
+
+    .toast{
+      position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+      background: rgba(0,0,0,.65);
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 13px;
+      display:none; z-index: 99;
+      backdrop-filter: blur(10px);
+    }
+
+    .hidden{display:none!important}
+
+    .two-col{display:grid;grid-template-columns: 1.2fr .8fr;gap:12px;align-items:start}
+    .kpi{
+      display:flex;justify-content:space-between;gap:10px;
+      padding:12px;border-radius:16px;border:1px solid var(--line);
+      background: rgba(0,0,0,.16);
+    }
+    .kpi b{font-size:18px}
+    .kpi span{font-size:12px;color:var(--muted)}
+    .progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:8px}
+    .progress > div{height:100%;width:0%;background: linear-gradient(90deg,var(--accent),var(--accent2))}
+
+    footer{padding:26px 0 40px;border-top:1px solid var(--line);margin-top:18px}
+
+    @media (max-width:980px){
+      .grid3{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+      .pricing{grid-template-columns:1fr}
+      .links{display:none}
+      h1{font-size:34px}
+      .two-col{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <div class="nav">
+    <div class="wrap nav-in">
+      <div class="brand" id="goHome">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="t">Reprograma 30</div>
+          <div class="s" id="navSubtitle">Método Anti-Vício • Progresso diário</div>
+        </div>
+      </div>
+
+      <div class="links" id="navLinksHome">
+        <a href="#metodo">O método</a>
+        <a href="#identificar">Me identificar</a>
+        <a href="#planos">Assinar</a>
+        <a href="#faq">FAQ</a>
+      </div>
+
+      <div class="links hidden" id="navLinksTrilha">
+        <a href="#trilha">A trilha</a>
+        <a href="#checkin">Check-in</a>
+        <a href="#planos">Assinar</a>
+      </div>
+
+      <div class="rightbar">
+        <button class="btn btn-ghost btn-small" id="btnCrisisTop">Botão de crise</button>
+        <button class="btn btn-primary btn-small" id="btnPrimaryTop">Começar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME VIEW -->
+  <div id="viewHome">
+    <header>
+      <div class="wrap">
+        <div class="hero">
+          <div class="kicker">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="pill">Sem julgamento • Privacidade • Um dia por vez</span>
+            <span class="pill">Apostas • Álcool • Fumar • Pornografia • Drogas</span>
+          </div>
+
+          <h1>Você não é fraco. Você está preso num ciclo.</h1>
+          <p class="sub">
+            O <b>Reprograma 30</b> é um <b>Método Anti-Vício</b> (educacional e comportamental) para recuperar o controle.
+            Ele funciona porque troca “força de vontade” por <b>estrutura diária</b>, <b>interrupção do impulso</b> e
+            <b>progresso visível</b>.
+          </p>
+
+          <div class="row">
+            <button class="btn btn-primary" id="btnStartIdentify">Quero me identificar e começar</button>
+            <a class="btn btn-ghost" href="#metodo">Entender o método</a>
+          </div>
+
+          <div class="divider"></div>
+          <p class="small danger">
+            Aviso: suporte educacional/comportamental. Não substitui terapia/psiquiatria/tratamento médico.
+            Em risco de segurança, procure ajuda profissional imediatamente.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section id="metodo">
+      <div class="wrap">
+        <div class="title">
+          <h2>O que é o Método Anti-Vício</h2>
+          <p>Um sistema simples para vencer o impulso no momento certo e construir consistência no dia a dia.</p>
+        </div>
+
+        <div class="grid grid3">
+          <div class="card">
+            <h3>1) Consciência</h3>
+            <p>Você entende seu padrão (gatilhos, horários, emoções) e tira o vício do automático.</p>
+          </div>
+          <div class="card">
+            <h3>2) Interrupção</h3>
+            <p>Bloqueios + regras simples + Botão de Crise para vencer a vontade no momento crítico.</p>
+          </div>
+          <div class="card">
+            <h3>3) Reconstrução</h3>
+            <p>Você substitui o hábito e cria rotina. O cérebro aprende dopamina saudável.</p>
+          </div>
+        </div>
+
+        <div class="grid grid2" style="margin-top:12px">
+          <div class="card">
+            <h3>4) Progresso visível</h3>
+            <p>Check-ins + marcos (badges) + certificado e relatório. Isso mantém a pessoa no processo.</p>
+          </div>
+          <div class="card">
+            <h3>Por que as pessoas pagam por isso?</h3>
+            <p>Porque não é só informação — é <b>estrutura</b>. Quando a força de vontade falha, o método continua.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="identificar">
+      <div class="wrap">
+        <div class="title">
+          <h2>Se identifique agora</h2>
+          <p>Clique no que mais parece com você. Você vai para uma trilha personalizada e já começa com o Dia 1.</p>
+        </div>
+
+        <div class="grid grid3">
+          <div class="card choice" data-v="apostas">
+            <div>
+              <h3>🎯 Apostas</h3>
+              <p>“Só mais uma” • tentar recuperar • ansiedade • culpa • perda de dinheiro.</p>
+              <div class="divider"></div>
+              <span class="badge bad">urgência</span>
+              <span class="badge warn">impulso</span>
+              <span class="badge warn">gatilho digital</span>
+            </div>
+            <div class="right"><span class="badge good">Abrir</span></div>
+          </div>
+
+          <div class="card choice" data-v="alcool">
+            <div>
+              <h3>🍺 Álcool</h3>
+              <p>“Só hoje” • social • fim de semana • estresse • recaída repetida.</p>
+              <div class="divider"></div>
+              <span class="badge warn">gatilho social</span>
+              <span class="badge warn">rotina</span>
+            </div>
+            <div class="right"><span class="badge good">Abrir</span></div>
+          </div>
+
+          <div class="card choice" data-v="fumar">
+            <div>
+              <h3>🚬 Fumar</h3>
+              <p>Automático • “pausa” • ansiedade • trabalho • nicotina.</p>
+              <div class="divider"></div>
+              <span class="badge warn">hábito</span>
+              <span class="badge warn">ansiedade</span>
+            </div>
+            <div class="right"><span class="badge good">Abrir</span></div>
+          </div>
+
+          <div class="card choice" data-v="pornografia">
+            <div>
+              <h3>🧠 Pornografia</h3>
+              <p>Compulsão • escapismo • culpa • gatilhos no celular • queda de energia.</p>
+              <div class="divider"></div>
+              <span class="badge warn">gatilho digital</span>
+              <span class="badge warn">isolamento</span>
+            </div>
+            <div class="right"><span class="badge good">Abrir</span></div>
+          </div>
+
+          <div class="card choice" data-v="drogas">
+            <div>
+              <h3>⚠️ Drogas</h3>
+              <p>Ambiente • companhia • fuga emocional • recaídas por gatilho social.</p>
+              <div class="divider"></div>
+              <span class="badge bad">atenção</span>
+              <span class="badge warn">apoio</span>
+            </div>
+            <div class="right"><span class="badge good">Abrir</span></div>
+          </div>
+
+          <div class="card">
+            <h3>Não sabe qual?</h3>
+            <p>Comece pelo que mais te destrói hoje. Depois você pode trocar de trilha.</p>
+            <div class="row" style="margin-top:12px">
+              <button class="btn btn-primary btn-wide" id="btnStartAny">Começar agora</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="planos">
+      <div class="wrap">
+        <div class="title">
+          <h2>Assine e tenha acesso completo</h2>
+          <p>Links Kiwify já configurados. A pessoa paga e entra.</p>
+        </div>
+
+        <div class="pricing">
+          <div class="card price">
+            <h3 style="margin:0">Mensal</h3>
+            <div class="money">R$ 29 <small>/ mês</small></div>
+            <ul class="features">
+              <li><span class="check">✓</span><span>Todas as trilhas (apostas, álcool, fumar, pornografia, drogas)</span></li>
+              <li><span class="check">✓</span><span>Programa completo 30 dias</span></li>
+              <li><span class="check">✓</span><span>Recompensas + materiais</span></li>
+            </ul>
+            <div class="row" style="margin-top:14px">
+              <a class="btn btn-primary btn-wide" href="https://pay.kiwify.com.br/RrMdJme" target="_blank" rel="noopener">Assinar mensal</a>
+            </div>
+          </div>
+
+          <div class="card price best">
+            <h3 style="margin:0">Trimestral</h3>
+            <div class="money">R$ 69 <small>/ 3 meses</small></div>
+            <ul class="features">
+              <li><span class="check">✓</span><span>Melhor custo/benefício</span></li>
+              <li><span class="check">✓</span><span>Tempo ideal (90 dias) para consolidar</span></li>
+              <li><span class="check">✓</span><span>Continuidade e consistência</span></li>
+            </ul>
+            <div class="row" style="margin-top:14px">
+              <a class="btn btn-primary btn-wide" href="https://pay.kiwify.com.br/Kgog3p3" target="_blank" rel="noopener">Assinar trimestral</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="title">
+          <h2>FAQ</h2>
+          <p>Perguntas rápidas para reduzir dúvidas e aumentar conversão.</p>
+        </div>
+
+        <div class="grid grid2">
+          <details>
+            <summary>Isso é terapia?</summary>
+            <p>Não. É apoio educacional/comportamental. Para casos graves, o ideal é acompanhamento profissional junto.</p>
+          </details>
+          <details>
+            <summary>Se eu recair, acabou?</summary>
+            <p>Não. O método inclui “plano de retomada” para voltar sem cair no ciclo culpa → repetição.</p>
+          </details>
+          <details>
+            <summary>Como tem recompensa sem gastar nada?</summary>
+            <p>Badges + certificado + relatório gerados no navegador (download). Não precisa servidor.</p>
+          </details>
+          <details>
+            <summary>Eu posso trocar de trilha?</summary>
+            <p>Sim. Você começa com o que te pega mais hoje e pode ajustar depois.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <p class="small">
+          <b>Reprograma 30</b> é suporte educacional/comportamental. Não substitui tratamento profissional.
+          Em risco de segurança, procure ajuda imediata.
+        </p>
+        <p class="small">© <span id="yearHome"></span> Reprograma 30.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- TRILHA VIEW (PÁGINA POR VÍCIO - dentro do mesmo arquivo) -->
+  <div id="viewTrilha" class="hidden">
+    <header>
+      <div class="wrap">
+        <div class="hero">
+          <div class="kicker">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="pill" id="pillType">Trilha</span>
+            <span class="pill">8–12 min/dia</span>
+            <span class="pill">Progresso visível</span>
+          </div>
+
+          <h1 id="trTitle">Trilha</h1>
+          <p class="sub" id="trDesc">…</p>
+
+          <div class="row">
+            <button class="btn btn-primary" id="btnDay1">Começar Dia 1 (demo)</button>
+            <button class="btn btn-ghost" id="btnCrisisHero">Botão de crise</button>
+            <a class="btn btn-soft" href="#planos" id="btnGoPlans">Assinar para liberar tudo</a>
+          </div>
+
+          <div class="divider"></div>
+          <p class="small danger">
+            Aviso: suporte educacional/comportamental. Não substitui tratamento profissional.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section id="trilha">
+      <div class="wrap">
+        <div class="title">
+          <h2>Estrutura do Método (30 dias)</h2>
+          <p>Mesma lógica — muda o exemplo e os gatilhos do seu caso.</p>
+        </div>
+
+        <div class="grid grid2">
+          <div class="card">
+            <h3>Fase 1 — Consciência (1–7)</h3>
+            <p class="muted" id="p1">…</p>
+          </div>
+          <div class="card">
+            <h3>Fase 2 — Interrupção (8–14)</h3>
+            <p class="muted" id="p2">…</p>
+          </div>
+          <div class="card">
+            <h3>Fase 3 — Reconstrução (15–21)</h3>
+            <p class="muted" id="p3">…</p>
+          </div>
+          <div class="card">
+            <h3>Fase 4 — Consolidação (22–30)</h3>
+            <p class="muted" id="p4">…</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>O que muda em 7 dias (se você fizer o básico)</h3>
+          <p class="muted" id="in7">…</p>
+          <div class="divider"></div>
+          <h3>O que muda em 30 dias (se você seguir o plano)</h3>
+          <p class="muted" id="in30">…</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="checkin">
+      <div class="wrap">
+        <div class="title">
+          <h2>Check-in (demo grátis / local)</h2>
+          <p>Salva no navegador. Zero custo. Isso cria consistência e progresso visível.</p>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Seu progresso</h3>
+            <div class="divider"></div>
+            <div class="kpi">
+              <div><span>Streak</span><br/><b id="streak">0</b></div>
+              <div style="text-align:right"><span>Último check-in</span><br/><b id="last">—</b></div>
+            </div>
+            <div class="progress"><div id="progBar"></div></div>
+
+            <div class="divider"></div>
+
+            <div class="muted small">Hoje eu…</div>
+            <select class="btn btn-ghost btn-wide" id="ciDid" style="justify-content:space-between">
+              <option value="ok">Não caí</option>
+              <option value="slip">Quase caí</option>
+              <option value="relapse">Caí</option>
+            </select>
+
+            <div class="divider"></div>
+            <div class="muted small">Vontade (0–5)</div>
+            <input id="ciUrge" type="range" min="0" max="5" value="2" style="width:100%"/>
+
+            <div class="divider"></div>
+            <div class="muted small">Gatilho</div>
+            <select class="btn btn-ghost btn-wide" id="ciTrig" style="justify-content:space-between">
+              <option>Tédio</option>
+              <option>Ansiedade/Estresse</option>
+              <option>Tristeza/Solidão</option>
+              <option>Ambiente/Social</option>
+              <option>Celular/Feed</option>
+            </select>
+
+            <div class="row" style="margin-top:12px">
+              <button class="btn btn-primary" id="btnCheckin">Salvar check-in</button>
+              <button class="btn btn-ghost" id="btnReset">Zerar</button>
+            </div>
+
+            <div class="row" style="margin-top:10px">
+              <button class="btn btn-ghost" id="btnBadges">Badges</button>
+              <button class="btn btn-ghost" id="btnCert">Certificado</button>
+              <button class="btn btn-ghost" id="btnReport">Relatório</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Recompensas (zero custo)</h3>
+            <p class="muted">Progresso visível mantém você no processo.</p>
+            <div class="divider"></div>
+            <p class="muted" id="rewardText">
+              Faça 7 dias seguidos sem cair e desbloqueie certificado + badge.
+            </p>
+            <div class="divider"></div>
+            <h3>Próximo passo</h3>
+            <p class="muted">Se quiser o conteúdo completo 30 dias + continuidade 90 dias, assine abaixo.</p>
+            <div class="row" style="margin-top:12px">
+              <a class="btn btn-primary btn-wide" href="https://pay.kiwify.com.br/RrMdJme" target="_blank" rel="noopener">Assinar mensal</a>
+              <a class="btn btn-soft btn-wide" href="https://pay.kiwify.com.br/Kgog3p3" target="_blank" rel="noopener">Assinar trimestral</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="planos">
+      <div class="wrap">
+        <div class="title">
+          <h2>Assinar e acessar tudo</h2>
+          <p>Escolha mensal ou trimestral (Kiwify).</p>
+        </div>
+
+        <div class="pricing">
+          <div class="card price">
+            <h3 style="margin:0">Mensal</h3>
+            <div class="money">R$ 29 <small>/ mês</small></div>
+            <ul class="features">
+              <li><span class="check">✓</span><span>Todas as trilhas</span></li>
+              <li><span class="check">✓</span><span>Conteúdo completo 30 dias</span></li>
+              <li><span class="check">✓</span><span>Continuidade e reforço</span></li>
+            </ul>
+            <div class="row" style="margin-top:14px">
+              <a class="btn btn-primary btn-wide" href="https://pay.kiwify.com.br/RrMdJme" target="_blank" rel="noopener">Assinar mensal</a>
+            </div>
+          </div>
+
+          <div class="card price best">
+            <h3 style="margin:0">Trimestral</h3>
+            <div class="money">R$ 69 <small>/ 3 meses</small></div>
+            <ul class="features">
+              <li><span class="check">✓</span><span>Melhor custo/benefício</span></li>
+              <li><span class="check">✓</span><span>90 dias para consolidar</span></li>
+              <li><span class="check">✓</span><span>Mais tempo, menos recaída</span></li>
+            </ul>
+            <div class="row" style="margin-top:14px">
+              <a class="btn btn-primary btn-wide" href="https://pay.kiwify.com.br/Kgog3p3" target="_blank" rel="noopener">Assinar trimestral</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <p class="small">
+          <b>Reprograma 30</b> é suporte educacional/comportamental. Não substitui tratamento profissional.
+        </p>
+        <p class="small">© <span id="yearTrilha"></span> Reprograma 30.</p>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // --- helpers
+    const $ = (id) => document.getElementById(id);
+    const toast = (msg) => {
+      const el = $("toast");
+      el.textContent = msg;
+      el.style.display = "block";
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=> el.style.display="none", 2400);
+    };
+    $("yearHome").textContent = new Date().getFullYear();
+    $("yearTrilha").textContent = new Date().getFullYear();
+
+    // --- crisis
+    function crisis(){
+      alert(
+`BOTÃO DE CRISE (3–7 min)
+1) Respire 4-4-6 por 2 minutos.
+2) Largue o celular / saia do ambiente por 5 min.
+3) Nomeie a emoção: tédio, ansiedade, solidão, estresse.
+4) Faça 1 ação rápida: água + caminhada curta + 10 agachamentos.
+5) Volte e faça o check-in. Você só precisa vencer HOJE.`
+      );
+    }
+    $("btnCrisisTop").addEventListener("click", crisis);
+    $("btnCrisisHero").addEventListener("click", crisis);
+
+    // --- SPA views
+    const viewHome = $("viewHome");
+    const viewTrilha = $("viewTrilha");
+    const navLinksHome = $("navLinksHome");
+    const navLinksTrilha = $("navLinksTrilha");
+    const navSubtitle = $("navSubtitle");
+    const btnPrimaryTop = $("btnPrimaryTop");
+
+    function showHome(){
+      viewHome.classList.remove("hidden");
+      viewTrilha.classList.add("hidden");
+      navLinksHome.classList.remove("hidden");
+      navLinksTrilha.classList.add("hidden");
+      navSubtitle.textContent = "Método Anti-Vício • Progresso diário";
+      btnPrimaryTop.textContent = "Começar";
+      window.scrollTo({top:0, behavior:"smooth"});
+      history.replaceState({view:"home"}, "", "#");
+    }
+
+    function showTrilha(v){
+      viewHome.classList.add("hidden");
+      viewTrilha.classList.remove("hidden");
+      navLinksHome.classList.add("hidden");
+      navLinksTrilha.classList.remove("hidden");
+      const d = DATA[v] || DATA.apostas;
+      navSubtitle.textContent = d.pill;
+      btnPrimaryTop.textContent = "Assinar";
+      btnPrimaryTop.onclick = () => document.getElementById("planos").scrollIntoView({behavior:"smooth", block:"start"});
+      applyTrilha(v);
+      window.scrollTo({top:0, behavior:"smooth"});
+      history.pushState({view:"trilha", v}, "", "#"+v);
+    }
+
+    $("goHome").addEventListener("click", showHome);
+    $("btnPrimaryTop").addEventListener("click", () => {
+      // home: desce pra identificação / trilha: desce pros planos
+      if(!viewHome.classList.contains("hidden")) document.getElementById("identificar").scrollIntoView({behavior:"smooth", block:"start"});
+      else document.getElementById("planos").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+    $("btnStartIdentify").addEventListener("click", () => document.getElementById("identificar").scrollIntoView({behavior:"smooth", block:"start"}));
+    $("btnStartAny").addEventListener("click", () => showTrilha("apostas"));
+
+    // --- Content per addiction
+    const DATA = {
+      apostas:{
+        pill:"Trilha • Apostas",
+        title:"Apostas: recuperar controle e parar o ciclo do “só mais uma”",
+        desc:"Você vai quebrar o impulso, reduzir gatilhos digitais e reconstruir controle financeiro e mental — um dia por vez.",
+        p1:"Diagnóstico real (perdas/padrões) + ciclo do quase-ganho + mapear gatilhos (tédio/ansiedade/celular).",
+        p2:"Bloqueio de apps/sites + limpeza do feed + regra das 24h + técnica dos 10 minutos.",
+        p3:"Reestruturação financeira simples + substituição de dopamina + rotina para horários críticos.",
+        p4:"Plano anti-recaída + continuidade 90 dias + identidade: ‘eu retomei o controle’.",
+        in7:"Menos gatilhos no celular, menos impulso automático e um plano claro para quando bater vontade.",
+        in30:"Mais controle emocional e financeiro, menos recaídas e rotina estável para manter o resultado.",
+        day1Title:"Dia 1 — Diagnóstico real (Apostas)",
+        day1Text:"Escreva quanto perdeu, quando começou, horários, emoções, gatilhos digitais e o custo invisível (ansiedade/culpa). Clareza corta o automático."
+      },
+      alcool:{
+        pill:"Trilha • Álcool",
+        title:"Álcool: sair do “só hoje” e quebrar o padrão de fim de semana",
+        desc:"Você vai reduzir gatilhos sociais, criar alternativas reais e construir rotina para manter consistência.",
+        p1:"Mapear situações sociais + emoções + rota de recaída (sexta/sábado).",
+        p2:"Plano de ambiente + alternativas sociais + regras de proteção (se eu for, eu faço X).",
+        p3:"Rotina e recompensa saudável + sono/energia + controle de estresse.",
+        p4:"Plano 90 dias + prevenção de recaída em eventos e datas críticas.",
+        in7:"Você identifica onde escorrega e cria um plano para eventos/finais de semana sem perder o controle.",
+        in30:"Você ganha consistência, melhora energia/sono e reduz o ‘puxão’ social que te derruba.",
+        day1Title:"Dia 1 — Mapa do padrão (Álcool)",
+        day1Text:"Escreva quando bebe, com quem, por quê e o que acontece depois. Marque 3 gatilhos e 1 mudança de ambiente."
+      },
+      fumar:{
+        pill:"Trilha • Fumar",
+        title:"Fumar: quebrar o automático e substituir a “pausa”",
+        desc:"Você vai entender gatilhos fixos, substituir pausas e criar um plano simples para ansiedade.",
+        p1:"Mapear ‘cigarro = pausa’ (trabalho/ansiedade) e gatilhos fixos.",
+        p2:"Substituição de pausa + reduzir acessibilidade + regra simples de atraso.",
+        p3:"Rotina + técnica para ansiedade (respiração, caminhada curta).",
+        p4:"Consolidação + prevenção de recaída + continuidade 90 dias.",
+        in7:"Você troca o cigarro por pausas curtas funcionais e diminui a dependência do automático.",
+        in30:"Você cria padrão novo, melhora fôlego/energia e mantém controle nas horas críticas.",
+        day1Title:"Dia 1 — Gatilhos fixos (Fumar)",
+        day1Text:"Liste 5 momentos automáticos (café, pós-almoço, estresse). Para cada um, escreva uma alternativa de 2 minutos."
+      },
+      pornografia:{
+        pill:"Trilha • Pornografia",
+        title:"Pornografia: quebrar compulsão e reduzir gatilhos digitais",
+        desc:"Você vai cortar gatilhos, criar barreiras digitais e substituir o hábito por rotina e foco.",
+        p1:"Mapear gatilhos (noite, solidão, celular) e o ciclo culpa → repetição.",
+        p2:"Higiene digital (bloqueios/ambiente) + regra de atraso + rotina de crise.",
+        p3:"Substituição de hábito + rotina de energia + reconstrução de foco.",
+        p4:"Plano 90 dias + prevenção de recaída + identidade e propósito.",
+        in7:"Você reduz gatilhos digitais e já sente menos compulsão por estar menos exposto ao estímulo.",
+        in30:"Você recupera foco e energia, melhora rotina e constrói barreiras contra recaídas.",
+        day1Title:"Dia 1 — Padrão e gatilhos (Pornografia)",
+        day1Text:"Escreva horário crítico, lugar, emoção antes (tédio/ansiedade/solidão). Remova 1 gatilho digital hoje (app, conta, histórico)."
+      },
+      drogas:{
+        pill:"Trilha • Drogas",
+        title:"Drogas: reduzir risco, reestruturar ambiente e construir consistência",
+        desc:"Foco em ambiente, suporte, rotina e redução de exposição. Em casos graves, busque apoio profissional junto.",
+        p1:"Mapear ambiente/pessoas/situações e o ciclo (emoção → uso → consequência).",
+        p2:"Plano de proteção + reduzir exposição + ‘plano de saída’ de situações de risco.",
+        p3:"Rotina estruturada + substituição + responsabilidade (check-in).",
+        p4:"Plano 90 dias + prevenção de recaída + reforço de suporte.",
+        in7:"Você identifica ambientes de risco e cria ações claras para se proteger de recaídas.",
+        in30:"Você constrói rotina estável e reduz exposição, tornando recaída menos provável.",
+        day1Title:"Dia 1 — Ambiente e risco (Drogas)",
+        day1Text:"Liste 3 ambientes/pessoas de risco e 3 ações de proteção (evitar rota, bloquear contato, mudar rotina). Se houver risco à sua segurança, procure ajuda."
+      }
+    };
+
+    let currentV = "apostas";
+
+    function applyTrilha(v){
+      currentV = v;
+      const d = DATA[v] || DATA.apostas;
+      $("pillType").textContent = d.pill;
+      $("trTitle").textContent = d.title;
+      $("trDesc").textContent = d.desc;
+      $("p1").textContent = d.p1;
+      $("p2").textContent = d.p2;
+      $("p3").textContent = d.p3;
+      $("p4").textContent = d.p4;
+      $("in7").textContent = d.in7;
+      $("in30").textContent = d.in30;
+      localStorage.setItem("rp30_selected", v);
+      updateUI();
+    }
+
+    // open from cards
+    document.querySelectorAll(".choice[data-v]").forEach(el=>{
+      el.addEventListener("click", ()=> showTrilha(el.dataset.v));
+    });
+
+    $("btnDay1").addEventListener("click", ()=>{
+      const d = DATA[currentV] || DATA.apostas;
+      alert(d.day1Title + "\n\n" + d.day1Text + "\n\nExercício: escreva 10 linhas e faça o check-in.");
+      document.getElementById("checkin").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    // --- Check-in per addiction (local, free)
+    function key(){ return "rp30_checkins_" + currentV; }
+    function load(){
+      try { return JSON.parse(localStorage.getItem(key()) || "[]"); } catch { return []; }
+    }
+    function save(arr){ localStorage.setItem(key(), JSON.stringify(arr)); }
+    function fmtDate(d){ return new Date(d).toLocaleDateString("pt-BR"); }
+
+    function getStreak(arr){
+      let streak = 0;
+      for(let i=arr.length-1;i>=0;i--){
+        if(arr[i].did === "ok") streak++;
+        else break;
+      }
+      return streak;
+    }
+
+    function updateUI(){
+      const arr = load();
+      const last = arr.length ? arr[arr.length-1].date : null;
+      $("last").textContent = last ? fmtDate(last) : "—";
+      const streak = getStreak(arr);
+      $("streak").textContent = String(streak);
+
+      // progress bar uses streak capped at 30
+      const pct = Math.min(100, Math.round((Math.min(streak,30)/30)*100));
+      $("progBar").style.width = pct + "%";
+
+      if(streak >= 30) $("rewardText").textContent = "🏆 30 dias! Certificado e relatório prontos. Você venceu HOJE — 30 vezes.";
+      else if(streak >= 14) $("rewardText").textContent = "🔥 14 dias! Você desbloqueou o badge 'Fortalecimento'.";
+      else if(streak >= 7) $("rewardText").textContent = "✅ 7 dias! Badge 'Primeira Semana' + certificado liberado.";
+      else if(streak >= 3) $("rewardText").textContent = "✅ 3 dias! Badge 'Início Forte' desbloqueado.";
+      else $("rewardText").textContent = "Faça 7 dias seguidos sem cair e desbloqueie certificado + badge.";
+    }
+
+    $("btnCheckin").addEventListener("click", ()=>{
+      const arr = load();
+      arr.push({
+        date: new Date().toISOString(),
+        did: $("ciDid").value,
+        urge: Number($("ciUrge").value),
+        trigger: $("ciTrig").value
+      });
+      save(arr);
+      toast("Check-in salvo. Um dia por vez.");
+      updateUI();
+    });
+
+    $("btnReset").addEventListener("click", ()=>{
+      localStorage.removeItem(key());
+      toast("Zerado.");
+      updateUI();
+    });
+
+    $("btnBadges").addEventListener("click", ()=>{
+      const streak = getStreak(load());
+      const unlocked = [];
+      if(streak >= 3) unlocked.push("🏅 Início Forte (3 dias)");
+      if(streak >= 7) unlocked.push("🏅 Primeira Semana (7 dias)");
+      if(streak >= 14) unlocked.push("🏅 Fortalecimento (14 dias)");
+      if(streak >= 30) unlocked.push("🏆 Reprograma 30 (30 dias)");
+      alert(unlocked.length ? ("Badges desbloqueados:\n\n" + unlocked.join("\n")) : "Nenhum badge ainda. Faça 3 dias seguidos sem cair para desbloquear o primeiro.");
+    });
+
+    function downloadText(filename, text){
+      const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    $("btnCert").addEventListener("click", ()=>{
+      const arr = load();
+      const streak = getStreak(arr);
+      if(streak < 7){
+        alert("Para gerar o certificado, desbloqueie 7 dias seguidos sem cair.");
+        return;
+      }
+      const name = prompt("Nome/apelido para o certificado:", "Anônimo") || "Anônimo";
+      const d = DATA[currentV] || DATA.apostas;
+
+      const txt =
+`CERTIFICADO — REPROGRAMA 30
+Trilha: ${d.pill.replace("Trilha • ","")}
+Emitido em: ${new Date().toLocaleDateString("pt-BR")}
+
+Certificamos que ${name}
+atingiu ${streak} dias de consistência.
+
+"Você não venceu para sempre. Você venceu HOJE.
+E isso, repetido, muda uma vida."
+
+(Reprograma 30 — apoio educacional/comportamental)`;
+      downloadText(`certificado-${currentV}-${name}.txt`, txt);
+      toast("Certificado baixado.");
+    });
+
+    $("btnReport").addEventListener("click", ()=>{
+      const arr = load();
+      if(!arr.length){ alert("Faça pelo menos 1 check-in para gerar relatório."); return; }
+      const last = arr.slice(-30);
+      const avgUrge = (last.reduce((s,x)=>s+(x.urge||0),0)/last.length).toFixed(2);
+      const trigCount = {};
+      last.forEach(x=> trigCount[x.trigger]=(trigCount[x.trigger]||0)+1);
+      const topTrig = Object.entries(trigCount).sort((a,b)=>b[1]-a[1]).slice(0,3)
+        .map(([k,v])=>`- ${k}: ${v}`).join("\n");
+
+      const d = DATA[currentV] || DATA.apostas;
+      const streak = getStreak(arr);
+
+      const txt =
+`RELATÓRIO — REPROGRAMA 30 (DEMO LOCAL)
+Trilha: ${d.pill.replace("Trilha • ","")}
+Gerado em: ${new Date().toLocaleString("pt-BR")}
+
+- Streak atual (dias seguidos sem cair): ${streak}
+- Check-ins analisados: ${last.length}
+- Vontade média (0–5): ${avgUrge}
+
+Top gatilhos:
+${topTrig || "- —"}
+
+Obs.: apoio educacional/comportamental. Não substitui acompanhamento profissional.`;
+      downloadText(`relatorio-${currentV}.txt`, txt);
+      toast("Relatório baixado.");
+    });
+
+    // routing on load (hash)
+    function initRoute(){
+      const h = (location.hash || "").replace("#","").trim().toLowerCase();
+      if(h && DATA[h]) showTrilha(h);
+      else showHome();
+      const saved = localStorage.getItem("rp30_selected");
+      if(!h && saved && DATA[saved]) { /* mantém como preferencia para depois */ }
+    }
+    window.addEventListener("popstate", (e)=>{
+      if(e.state && e.state.view === "trilha" && e.state.v) showTrilha(e.state.v);
+      else showHome();
+    });
+
+    initRoute();
+  </script>
+</body>
+</html>
